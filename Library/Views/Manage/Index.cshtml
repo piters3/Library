@@ -1,0 +1,23 @@
+﻿@model IdentitySample.Models.IndexViewModel
+@{
+    ViewBag.Title = "Zarządzanie kontem";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (@ViewBag.StatusMessage != "") {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Świetnie!</strong> @ViewBag.StatusMessage
+    </div>
+
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Hasło:</dt>
+        <dd>
+            @Html.ActionLink("Zmień hasło", "ChangePassword")
+        </dd>
+    </dl>
+</div>

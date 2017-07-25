@@ -38,6 +38,5 @@ namespace IdentitySample.Models {
         [Display(Name = "Potwierdź hasło")]
         [Compare("Password", ErrorMessage = "Hasła nie pasuje do siebie.")]
         public string ConfirmPassword { get; set; }
-
     }
 }

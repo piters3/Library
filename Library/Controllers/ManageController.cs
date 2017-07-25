@@ -7,68 +7,104 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IdentitySample.Controllers
-{
+namespace IdentitySample.Controllers {
     [Authorize]
-    public class ManageController : Controller
-    {
-        public ManageController()
-        {
+    public class ManageController : Controller {
+        public ManageController() {
         }
 
-        public ManageController(ApplicationUserManager userManager)
-        {
+        public ManageController(ApplicationUserManager userManager) {
             UserManager = userManager;
         }
 
         private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
+        public ApplicationUserManager UserManager {
+            get {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
-            private set
-            {
+            private set {
                 _userManager = value;
             }
         }
 
         //
-        // GET: /Account/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
-        {
+        // GET: /Manage/Index
+        public async Task<ActionResult> Index(ManageMessageId? message) {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Twoje hasło zostało zmienione!"
                 : message == ManageMessageId.Error ? "Wystąpił błąd"
                 : "";
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
+            return View(user);
+        }
+
+        //
+        // GET: /Manage/EditAccount
+        public async Task<ActionResult> EditAccount() {
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            return View(new EditAccountViewModel() {
+                UserName = user.UserName,
+                Name = user.Name,
+                Surname = user.Surname,
+                Address = user.Address,
+                City = user.City,
+                PostalCode = user.PostalCode
+            });
+        }
+
+        //
+        // POST: /Manage/EditAccount
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditAccount([Bind(Include = "UserName, Name, Surname, Address, City, PostalCode, Avatar")] EditAccountViewModel editAccount, HttpPostedFileBase image = null) {
+            if (ModelState.IsValid) {             
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user == null) {
+                    return HttpNotFound();
+                }
+                user.UserName = editAccount.UserName;
+                user.Name = editAccount.Name;
+                user.Surname = editAccount.Surname;
+                user.Address = editAccount.Address;
+                user.City = editAccount.City;
+                user.PostalCode = editAccount.PostalCode;
+
+                if (image != null) {
+                    user.ImageMimeType = image.ContentType;
+                    user.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(user.ImageData, 0, image.ContentLength);
+                }
+
+                IdentityResult result = await UserManager.UpdateAsync(user);
+
+                TempData["message"] = string.Format("Dane konta zostały zmienione");
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Something failed.");
             return View();
         }
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
+        public ActionResult ChangePassword() {
             return View();
         }
 
         //
-        // POST: /Account/Manage
+        // POST: /Account/Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model) {
+            if (!ModelState.IsValid) {
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
+            if (result.Succeeded) {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
+                if (user != null) {
                     await SignInAsync(user, isPersistent: false);
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
@@ -81,30 +117,24 @@ namespace IdentitySample.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
+        private IAuthenticationManager AuthenticationManager {
+            get {
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
 
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
-        {
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent) {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
         }
 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
+        private void AddErrors(IdentityResult result) {
+            foreach (var error in result.Errors) {
                 ModelState.AddModelError("", error);
             }
         }
 
-        public enum ManageMessageId
-        {
+        public enum ManageMessageId {
             AddPhoneSuccess,
             ChangePasswordSuccess,
             SetTwoFactorSuccess,

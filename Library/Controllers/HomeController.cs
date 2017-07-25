@@ -1,12 +1,42 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
+using System.Threading.Tasks;
+using IdentitySample.Models;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
-namespace IdentitySample.Controllers
-{
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
+namespace IdentitySample.Controllers {
+    public class HomeController : Controller {
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager {
+            get {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set {
+                _userManager = value;
+            }
+        }
+
+        public ActionResult Index() {
             return View();
         }
+
+        public async Task<FileContentResult> GetImage() {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null) {
+                return File(user.ImageData, user.ImageMimeType);
+            } else {
+                return null;
+            }
+        }
+
+        public FilePathResult GetDefaultImage() {
+            string path = "~\\Content\\Img\\default.jpg";
+            string type = "image/jpeg";
+            return File(path, type);
+        }
     }
+
+
 }

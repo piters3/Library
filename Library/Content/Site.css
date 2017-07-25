@@ -37,3 +37,25 @@ input[type="checkbox"].input-validation-error {
 #logoutForm {
     margin-right: 0px;
 }
+
+.avatar img {
+    width: 100px;
+    height: 100px;
+    background: #FFFFFF;
+    margin: auto;
+    -moz-border-radius: 60px;
+    border-radius: 100px;
+    padding: 3px;
+    box-shadow: 0px 0px 20px #888;
+}
+
+input[type="file"] {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background-color: transparent;
+    color: transparent;
+}

@@ -145,10 +145,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin\css\bootstrap.min.css" />
+    <Content Include="Content\Admin\css\font-awesome.css" />
+    <Content Include="Content\Admin\css\font-awesome.min.css" />
+    <Content Include="Content\Admin\css\templatemo_main.css" />
+    <Content Include="Content\Admin\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\Admin\bootstrap.min.js" />
+    <Content Include="Scripts\Admin\Chart.min.js" />
+    <Content Include="Scripts\Admin\jquery.min.js" />
+    <Content Include="Scripts\Admin\templatemo_script.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Manage\EditAccount.cshtml" />
+    <Content Include="Views\PanelAdmin\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Content\Admin\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Admin\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Admin\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Admin\fonts\FontAwesome.otf" />
+    <Content Include="Content\Admin\fonts\fontawesome-webfont.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -216,8 +232,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PanelAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
-    <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,32 +1,29 @@
 ﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuwanie roli " + Model.Name;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Delete.</h2>
+<h3>Jesteś pewny, że chcesz usunąć tą rolę?</h3>
+<p>Usunięcie tej roli usunie wszystkich użytkowników do niej przypisanych. Użytkownicy nie zostaną usunięci.</p>
 
-<h3>Are you sure you want to delete this Role? </h3>
-<p>Deleting this Role will remove all users from this role. It will not delete the users.</p>
 <div>
-    <h4>Role.</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+             Nazwa
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
     </dl>
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-danger" /> |
+            @Html.ActionLink("Powrót do listy", "Index")
         </div>
     }
 </div>

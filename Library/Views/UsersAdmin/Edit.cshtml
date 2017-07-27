@@ -1,49 +1,110 @@
 ﻿@model IdentitySample.Models.EditUserViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytowanie użytkownika " + Model.UserName;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit.</h2>
+<div class="col-md-6 well bs-component">
 
-
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Edit User Form.</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-               @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.Email)
+    @using (Html.BeginForm("Edit", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
+        <fieldset>
+            <legend>@ViewBag.Title</legend>
+            @Html.AntiForgeryToken()
+            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @Html.ValidationSummary(true, "")
+                </div>
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImageData, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <div class="avatar">
+                        @if (Model.ImageData != null) {
+                            <img src="@Url.Action("GetImage", "Home" )" />
+                        } else {
+                            <img src="@Url.Action("GetDefaultImage", "Home" )" />
+                        }
+                    </div>
+                    <input type="file" name="Image">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Roles", new { @class = "control-label col-md-2" })
-            <span class=" col-md-10">
-                @foreach (var item in Model.RolesList)
-                {
-                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
-                    @Html.Label(item.Value, new { @class = "control-label" })
-                }
-            </span>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-    </div>
-}
-
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PostalCode, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RolesList, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @foreach (var item in Model.RolesList) {
+                        <input type="radio" name="SelectedRole" id="@item.Value" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                        @Html.Label(item.Value, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Enabled, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.Enabled, new { @class = "checkbox-inline", id = "status" })
+                    @Html.Label("status", "Konto włączone", new { @class = "control-label" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-primary" />
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do listy", "Index")
 </div>
 
 @section Scripts {

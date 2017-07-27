@@ -51,7 +51,9 @@ namespace IdentitySample.Controllers {
                 Surname = user.Surname,
                 Address = user.Address,
                 City = user.City,
-                PostalCode = user.PostalCode
+                PostalCode = user.PostalCode,
+                ImageData=user.ImageData,
+                ImageMimeType=user.ImageMimeType      
             });
         }
 
@@ -59,7 +61,7 @@ namespace IdentitySample.Controllers {
         // POST: /Manage/EditAccount
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAccount([Bind(Include = "UserName, Name, Surname, Address, City, PostalCode, Avatar")] EditAccountViewModel editAccount, HttpPostedFileBase image = null) {
+        public async Task<ActionResult> EditAccount([Bind(Include = "UserName, Name, Surname, Address, City, PostalCode, ImageData, ImageMimeType")] EditAccountViewModel editAccount, HttpPostedFileBase image = null) {
             if (ModelState.IsValid) {             
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user == null) {

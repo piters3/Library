@@ -1,31 +1,84 @@
 ﻿@model IdentitySample.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuwanie użytkownika " + Model.UserName;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Delete.</h2>
 
-<h3>Are you sure you want to delete this User?</h3>
-<div>
-    <h4>User.</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+<h3>Jesteś pewny, że chcesz usunąć tego użytkownika?</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<div class="avatar">
+    @if (Model.ImageData != null) {
+        <img src="@Url.Action("GetImage", "Home" )" />
+    } else {
+        <img src="@Url.Action("GetDefaultImage", "Home" )" />
     }
 </div>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.UserName)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.UserName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Surname)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Surname)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Address)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.City)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.City)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.PostalCode)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.PostalCode)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.RegisterDate)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.RegisterDate)
+    </dd>
+</dl>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Enabled)
+    </dt>
+    <dd>
+        @if (Model.Enabled == true) {
+            @: Konto włączone
+        } else {
+            @:Konto zablokowane
+        }
+    </dd>
+</dl>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="submit" value="Usuń" class="btn btn-danger" /> |
+        @Html.ActionLink("Powrót do listy", "Index")
+    </div>
+}
+

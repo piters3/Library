@@ -74,7 +74,7 @@ namespace IdentitySample.Controllers {
         [HttpPost]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles) {
             if (ModelState.IsValid) {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser { UserName = userViewModel.UserName, Email = userViewModel.Email, RegisterDate = DateTime.Now, Enabled = true };
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -93,6 +93,7 @@ namespace IdentitySample.Controllers {
                     return View();
 
                 }
+                TempData["message"] = string.Format("Użytkownik {0} został poprawnie utworzony", user.UserName);
                 return RedirectToAction("Index");
             }
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
@@ -114,7 +115,16 @@ namespace IdentitySample.Controllers {
 
             return View(new EditUserViewModel() {
                 Id = user.Id,
+                UserName = user.UserName,
                 Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname,
+                Address = user.Address,
+                City = user.City,
+                PostalCode = user.PostalCode,
+                ImageData = user.ImageData,
+                ImageMimeType = user.ImageMimeType,
+                Enabled= user.Enabled,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem() {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
@@ -127,15 +137,27 @@ namespace IdentitySample.Controllers {
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole) {
+        public async Task<ActionResult> Edit([Bind(Include = "Id, UserName, Email, Name, Surname, Address, City, PostalCode, ImageData, ImageMimeType, Enabled")] EditUserViewModel editUser, HttpPostedFileBase image = null, params string[] selectedRole) {
             if (ModelState.IsValid) {
                 var user = await UserManager.FindByIdAsync(editUser.Id);
                 if (user == null) {
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
+                user.UserName = editUser.UserName;
                 user.Email = editUser.Email;
+                user.Name = editUser.Name;
+                user.Surname = editUser.Surname;
+                user.Address = editUser.Address;
+                user.City = editUser.City;
+                user.PostalCode = editUser.PostalCode;
+                user.Enabled = editUser.Enabled;
+
+                if (image != null) {
+                    user.ImageMimeType = image.ContentType;
+                    user.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(user.ImageData, 0, image.ContentLength);
+                }
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 
@@ -153,6 +175,8 @@ namespace IdentitySample.Controllers {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+
+                TempData["message"] = string.Format("Dane użytkownika {0} zostały zmienione", user.UserName);
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");

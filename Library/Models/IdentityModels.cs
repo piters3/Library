@@ -36,7 +36,7 @@ namespace IdentitySample.Models {
 
         public string ImageMimeType { get; set; }
 
-        [Display(Name = "Aktywowanie")]
+        [Display(Name = "Aktywność")]
         public bool Enabled { get; set; }
 
         [Display(Name = "Data rejestracji")]

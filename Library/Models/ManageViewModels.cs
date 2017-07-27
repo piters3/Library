@@ -43,6 +43,7 @@ namespace IdentitySample.Models {
 
         [Display(Name = "Kod pocztowy")]
         [DataType(DataType.PostalCode)]
+        [RegularExpression(@"^\d{2}-\d{3}?$", ErrorMessage = "Nieprawidłowy kod pocztowy")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Avatar")]

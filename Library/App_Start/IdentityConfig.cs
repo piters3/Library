@@ -111,7 +111,7 @@ namespace IdentitySample.Models {
 
             var user = userManager.FindByName(name);
             if (user == null) {
-                user = new ApplicationUser { UserName = name, Email = email, RegisterDate = DateTime.Now };
+                user = new ApplicationUser { UserName = name, Email = email, RegisterDate = DateTime.Now, Enabled = true };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }

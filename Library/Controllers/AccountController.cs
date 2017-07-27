@@ -86,8 +86,9 @@ namespace IdentitySample.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model) {
             if (ModelState.IsValid) {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, RegisterDate = DateTime.Now };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, RegisterDate = DateTime.Now, Enabled = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                result = await UserManager.AddToRolesAsync(user.Id, "user");
                 if (result.Succeeded) {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");

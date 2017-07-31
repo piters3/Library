@@ -1,29 +1,44 @@
 ﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
 
 @{
-    ViewBag.Title = "Usuwanie roli " + Model.Name;
+    ViewBag.Title = "Usuwanie roli " + '"' + Model.Name + '"';
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "RolesAdmin")">Zarządznie rolami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
 }
 
 <h3>Jesteś pewny, że chcesz usunąć tą rolę?</h3>
 <p>Usunięcie tej roli usunie wszystkich użytkowników do niej przypisanych. Użytkownicy nie zostaną usunięci.</p>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-             Nazwa
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+<div class="col-md-6">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title</h3>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    Nazwa
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-danger" /> |
-            @Html.ActionLink("Powrót do listy", "Index")
+                <div class="form-actions no-color">
+                    <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                    @Html.ActionLink("Powrót do listy", "Index")
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>

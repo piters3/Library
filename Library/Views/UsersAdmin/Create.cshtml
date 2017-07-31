@@ -4,65 +4,78 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="col-md-6 well bs-component">
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "UsersAdmin")">Zarządznie użytkownikami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
 
-    @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
-        <fieldset>
-            <legend>@ViewBag.Title</legend>
-            @Html.AntiForgeryToken()
-            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
-                <div class="alert alert-dismissible alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    @Html.ValidationSummary(true, "")
-                </div>
-            }
+<div class="col-md-6">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title</h3>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+                @Html.AntiForgeryToken()
+                if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        @Html.ValidationSummary(true, "")
+                    </div>
+                }
                 <div class="form-group">
-                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+                    @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
                         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+                    @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">
+                    <label class="control-label col-md-3">
                         Rola
                     </label>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         @foreach (var item in (SelectList)ViewBag.RoleId) {
-                            <input type="radio" name="SelectedRoles" id="@item.Value" value="@item.Value" class="checkbox-inline" required/>
-                                @Html.Label(item.Value, new { @class = "control-label" })
+                            <input type="radio" name="SelectedRoles" id="@item.Value" value="@item.Value" class="checkbox-inline" required />
+                            @Html.Label(item.Value, new { @class = "control-label" })
                         }
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" class="btn btn-primary" value="Stwórz" />
+                    <div class="col-md-offset-3 col-md-8">
+                        <button class="btn btn-primary icon-btn" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Stwórz</button>
                     </div>
                 </div>
-        </fieldset>
-    }
+            }
+        </div>
+    </div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

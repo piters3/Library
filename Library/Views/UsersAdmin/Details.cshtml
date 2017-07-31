@@ -1,94 +1,107 @@
 ﻿@model IdentitySample.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Szczegóły użytkownika " + Model.UserName;
+    ViewBag.Title = "Szczegóły użytkownika " + '"' + Model.UserName + '"';
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "UsersAdmin")">Zarządznie użytkownikami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
 
-<div class="avatar">
-    @if (Model.ImageData != null) {
-        <img src="@Url.Action("GetImage", "Home" )" />
-    } else {
-        <img src="@Url.Action("GetDefaultImage", "Home" )" />
-    }
+<div class="col-md-6">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title</h3>
+        <div class="card-body">
+            <div class="col-md-offset-2">
+                <div class="avatar">
+                    @if (Model.ImageData != null) {
+                        <img src="@Url.Action("GetImage", "Home" )" />
+                    } else {
+                        <img src="@Url.Action("GetDefaultImage", "Home" )" />
+                    }
+                </div>
+            </div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Surname)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PostalCode)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RegisterDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RegisterDate)
+                </dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    Rola
+                </dt>
+                <dd>
+                    @if (ViewBag.RoleNames.Count == 0) {
+                        <hr />
+                            <p>Brak przypisanych ról</p>
+                    } else {
+                        @ViewBag.RoleNames[0]
+                    }
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Enabled)
+                </dt>
+                <dd>
+                    @if (Model.Enabled == true) {
+                        @: Konto włączone
+        } else {
+                        @:Konto zablokowane
+        }
+                </dd>
+            </dl>
+
+            <a href="@Url.Action("Edit", "UsersAdmin", new { id = Model.Id })"><i class="fa fa-pencil-square-o"></i>Edytuj użytkownika</a>
+
+        </div>
+    </div>
 </div>
-
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.UserName)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.UserName)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Name)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.Name)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Surname)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.Surname)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Address)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.Address)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.City)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.City)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.PostalCode)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.PostalCode)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.RegisterDate)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.RegisterDate)
-    </dd>
-</dl>
-
-<dl class="dl-horizontal">
-    <dt>
-        Rola
-    </dt>
-    <dd>
-        @if (ViewBag.RoleNames.Count == 0) {
-            <hr />
-            <p>Brak przypisanych ról</p>
-        } else {
-            @ViewBag.RoleNames[0]
-        }
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Enabled)
-    </dt>
-    <dd>
-        @if (Model.Enabled == true) {
-            @: Konto włączone
-        } else {
-            @:Konto zablokowane
-        }
-    </dd>
-</dl>
-
-<a href="@Url.Action("Edit", "UsersAdmin", new { id = Model.Id })"><i class="fa fa-pencil-square-o"></i>Edytuj użytkownika</a>
-
-<p>
-    @Html.ActionLink("Powrót do listy", "Index")
-</p>
-
 
 

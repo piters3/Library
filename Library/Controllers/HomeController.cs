@@ -37,6 +37,4 @@ namespace IdentitySample.Controllers {
             return File(path, type);
         }
     }
-
-
 }

@@ -1,4 +1,4 @@
-﻿@using IdentitySample.Models
+﻿@using Library.Models
 @model LoginViewModel
 @{
     ViewBag.Title = "Logowanie";
@@ -48,11 +48,16 @@
                     <p>
                         @Html.ActionLink("Zarejestruj się", "Register")
                     </p>
+
+                    <p>
+                        @Html.ActionLink("Zapomniałeś hasła?", "ForgotPassword")
+                    </p>
                 </div>
             </div>
         </fieldset>
     }
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

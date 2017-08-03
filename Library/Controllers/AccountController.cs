@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using IdentitySample.Models;
+using Library.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IdentitySample.Controllers {
+namespace Library.Controllers {
     [Authorize]
     public class AccountController : Controller {
         public AccountController() {
@@ -58,19 +58,34 @@ namespace IdentitySample.Controllers {
                 return View(model);
             }
 
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var user = UserManager.FindByName(model.UserName);
+            if (user == null) {
+                ModelState.AddModelError("", "Podany użytkownik nie istnieje");
+                return View(model);
+            } else {
+                if (!UserManager.IsEmailConfirmed(user.Id)) {
+                    ModelState.AddModelError("", "Podane konto nie zostało aktywowane");
+                    return View(model);
+                } else if (!user.Enabled) {
+                    ModelState.AddModelError("", "To konto zostało zablokowane");
+                    return View(model);
+                }
+            }
+
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: true);
             switch (result) {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.Failure:
+                    ModelState.AddModelError("", "Błąd logownia");
+                    return View(model);
                 default:
                     ModelState.AddModelError("", "Błędne dane logowania");
                     return View(model);
             }
         }
-
 
         //
         // GET: /Account/Register
@@ -90,7 +105,10 @@ namespace IdentitySample.Controllers {
                 var result = await UserManager.CreateAsync(user, model.Password);
                 result = await UserManager.AddToRolesAsync(user.Id, "user");
                 if (result.Succeeded) {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Potwierdź swoje konto", "Potwierdź swoje konto klikając ten link: <a href=\"" + callbackUrl + "\">link</a>");
+                    TempData["message"] = string.Format("Na podany adres e-mail został wysłany link aktywacyjny");
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -105,6 +123,93 @@ namespace IdentitySample.Controllers {
         public ActionResult LogOff() {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // GET: /Account/ConfirmEmail
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string userId, string code) {
+            if (userId == null || code == null) {
+                return View("Error");
+            }
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        //
+        // GET: /Account/ForgotPassword
+        [AllowAnonymous]
+        public ActionResult ForgotPassword() {
+            return View();
+        }
+
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model) {
+            if (ModelState.IsValid) {
+
+                //var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) {
+                    return View("ForgotPasswordConfirmation");
+                }
+
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Resetowanie hasła ", "Zresetuj swoje hasło klikając ten link: <a href=\"" + callbackUrl + "\">Link</a>");
+                TempData["message"] = string.Format("Sprawdź swój email, aby zresetować hasło");
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation() {
+            return View();
+        }
+
+
+        //
+        // GET: /Account/ResetPassword
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string code) {
+            return code == null ? View("Error") : View();
+        }
+
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model) {
+            if (!ModelState.IsValid) {
+                return View(model);
+            }
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null) {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            if (result.Succeeded) {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            AddErrors(result);
+            return View();
+        }
+
+
+        //
+        // GET: /Account/ResetPasswordConfirmation
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation() {
+            return View();
         }
 
 

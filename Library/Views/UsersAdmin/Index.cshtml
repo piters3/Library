@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IdentitySample.Models.ApplicationUser>
+﻿@model IEnumerable<Library.Models.ApplicationUser>
 
 @{
     ViewBag.Title = "Zarządznie użytkownikami";
@@ -54,15 +54,15 @@
                             </td>
                             <td>
                                 @if (item.EmailConfirmed == true) {
-                                    @:Aktywowany
+                                    <span class="label label-success">Aktywowany</span>
                                 } else {
-                                    @:Nieaktywowany
+                                    <span class="label label-danger">Nieaktywowany</span>
                                 }
                                 /
                                 @if (item.Enabled == true) {
-                                    @:Włączony
+                                    <span class="label label-success">Włączony</span>
                                 } else {
-                                    @:Zablokowany
+                                    <span class="label label-danger">Zablokowany</span>
                                 }
                             </td>
                             <td>

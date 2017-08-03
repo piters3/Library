@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web;
+using System.Net.Mail;
 
-namespace IdentitySample.Models {
-    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+namespace Library.Models {
 
     public class ApplicationUserManager : UserManager<ApplicationUser> {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
@@ -22,12 +22,10 @@ namespace IdentitySample.Models {
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context) {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-            // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager) {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-            // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator {
                 RequiredLength = 3,
                 RequireNonLetterOrDigit = false,
@@ -35,12 +33,9 @@ namespace IdentitySample.Models {
                 RequireLowercase = true,
                 RequireUppercase = false,
             };
-            // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
-            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
-            // You can write your own provider and plug in here.
             manager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<ApplicationUser> {
                 MessageFormat = "Your security code is: {0}"
             });
@@ -59,7 +54,6 @@ namespace IdentitySample.Models {
         }
     }
 
-    // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
     public class ApplicationRoleManager : RoleManager<IdentityRole> {
         public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
             : base(roleStore) {
@@ -72,8 +66,12 @@ namespace IdentitySample.Models {
 
     public class EmailService : IIdentityMessageService {
         public Task SendAsync(IdentityMessage message) {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            SmtpClient client = new SmtpClient();
+            return client.SendMailAsync("pstrzelba3@gmail.com",
+                                        message.Destination,
+                                        message.Subject,
+                                        message.Body);
+
         }
     }
 
@@ -84,25 +82,20 @@ namespace IdentitySample.Models {
         }
     }
 
-    // This is useful if you do not want to tear down the database each time you run the application.
-    // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
-    // This example shows you how to create a new database if the Model changes
     public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
         protected override void Seed(ApplicationDbContext context) {
             InitializeIdentityForEF(context);
             base.Seed(context);
         }
 
-        //Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
         public static void InitializeIdentityForEF(ApplicationDbContext db) {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin";
             const string email = "admin@example.com";
-            const string password = "Admin@123456";
+            const string password = "admin";
             const string roleName = "Admin";
 
-            //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
             if (role == null) {
                 role = new IdentityRole(roleName);
@@ -113,10 +106,9 @@ namespace IdentitySample.Models {
             if (user == null) {
                 user = new ApplicationUser { UserName = name, Email = email, RegisterDate = DateTime.Now, Enabled = true };
                 var result = userManager.Create(user, password);
-                result = userManager.SetLockoutEnabled(user.Id, false);
+                result = userManager.SetLockoutEnabled(user.Id, true);
             }
 
-            // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
             if (!rolesForUser.Contains(role.Name)) {
                 var result = userManager.AddToRole(user.Id, role.Name);

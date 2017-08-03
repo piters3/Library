@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace IdentitySample.Models {
+namespace Library.Models {
     public class RoleViewModel {
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false)]

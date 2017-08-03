@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using System.Threading.Tasks;
-using IdentitySample.Models;
+using Library.Models;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 
-namespace IdentitySample.Controllers {
+namespace Library.Controllers {
     public class HomeController : Controller {
 
         private ApplicationUserManager _userManager;

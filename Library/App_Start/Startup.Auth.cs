@@ -2,11 +2,11 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using IdentitySample.Models;
+using Library.Models;
 using Owin;
 using System;
 
-namespace IdentitySample {
+namespace Library {
     public partial class Startup {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app) {
@@ -21,7 +21,7 @@ namespace IdentitySample {
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/PanelAdmin/Login"),
                 Provider = new CookieAuthenticationProvider {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  

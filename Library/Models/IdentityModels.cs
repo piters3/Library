@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentitySample.Models {
+namespace Library.Models {
     public class ApplicationUser : IdentityUser {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager) {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

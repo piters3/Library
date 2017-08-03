@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+
+@{
+    ViewBag.Title = "Logowanie do panelu administratora";
+}
+
+@using Library.Models
+@model LoginViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | Panel Administratora</title>
+    @Styles.Render("~/Content/Admin/css")
+</head>
+<body>
+    <section class="material-half-bg">
+        <div class="cover"></div>
+    </section>
+    <section class="login-content">
+        <div class="logo">
+            <h1>Library</h1>
+        </div>
+        @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @Html.ValidationSummary(true, "")
+            </div>
+        }
+        <div class="login-box">
+            @using (Html.BeginForm("Login", "PanelAdmin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" })) {
+                @Html.AntiForgeryToken()
+                <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>ZALOGUJ SIĘ</h3>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Nazwa użytkownika" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Hasło" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="utility">
+                        <div class="animated-checkbox">
+                            <label class="semibold-text">
+                                <input type="checkbox"><span class="label-text">Zapamiętać?</span>
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                        <p class="semibold-text mb-0"><a data-toggle="flip">Zapomniałeś hasła?</a></p>
+                    </div>
+                </div>
+                <div class="form-group btn-container">
+                    <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>ZALOGUJ SIĘ</button>
+                </div>
+            }
+
+            <form class="forget-form" action="index.html">
+                <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?</h3>
+                <div class="form-group">
+                    <label class="control-label">EMAIL</label>
+                    <input class="form-control" type="text" placeholder="Email">
+                </div>
+                <div class="form-group btn-container">
+                    <button class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>
+                </div>
+                <div class="form-group mt-20">
+                    <p class="semibold-text mb-0"><a data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> Back to Login</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/admin/jquery")
+    @Scripts.Render("~/bundles/admin/bootstrap")
+    @Scripts.Render("~/bundles/admin/main")
+    @Scripts.Render("~/bundles/admin/pace")
+
+</body>
+</html>

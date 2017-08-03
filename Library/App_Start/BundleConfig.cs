@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace IdentitySample {
+namespace Library {
     public class BundleConfig {
         public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

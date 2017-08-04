@@ -87,14 +87,24 @@
                     }
                 </dd>
                 <dt>
+                    @Html.DisplayNameFor(model => model.EmailConfirmed)
+                </dt>
+                <dd>
+                    @if (Model.EmailConfirmed == true) {
+                        @:Konto aktywowane
+                    } else {
+                        @:Konto nieaktywowane
+                    }
+                </dd>
+                <dt>
                     @Html.DisplayNameFor(model => model.Enabled)
                 </dt>
                 <dd>
                     @if (Model.Enabled == true) {
                         @: Konto włączone
-        } else {
+                    } else {
                         @:Konto zablokowane
-        }
+                    }
                 </dd>
             </dl>
 

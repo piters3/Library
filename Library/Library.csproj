@@ -254,6 +254,7 @@
     <Compile Include="Controllers\PanelAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Entities\Message.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

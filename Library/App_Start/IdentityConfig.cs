@@ -82,7 +82,7 @@ namespace Library.Models {
         }
     }
 
-    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
+   /* public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
         protected override void Seed(ApplicationDbContext context) {
             InitializeIdentityForEF(context);
             base.Seed(context);
@@ -114,7 +114,7 @@ namespace Library.Models {
                 var result = userManager.AddToRole(user.Id, role.Name);
             }
         }
-    }
+    }*/
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string> {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :

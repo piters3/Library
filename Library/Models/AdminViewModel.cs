@@ -43,6 +43,9 @@ namespace Library.Models {
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
 
+        [Display(Name = "Aktywacja mailem")]
+        public bool EmailConfirmed{ get; set; }
+
         [Display(Name = "Aktywność")]
         public bool Enabled { get; set; }
 

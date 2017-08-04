@@ -16,6 +16,9 @@ namespace Library.Models {
         [Display(Name = "Login")]
         public override string UserName { get; set; }
 
+        [Display(Name = "Aktywacja mailem")]
+        public override bool EmailConfirmed { get; set; }
+
         [Display(Name = "Imię")]
         public string Name { get; set; }
 
@@ -48,9 +51,9 @@ namespace Library.Models {
             : base("LibraryDB", throwIfV1Schema: false) {
         }
 
-        static ApplicationDbContext() {
+        /*static ApplicationDbContext() {
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
-        }
+        }*/
 
         public static ApplicationDbContext Create() {
             return new ApplicationDbContext();

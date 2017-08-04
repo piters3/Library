@@ -124,7 +124,8 @@ namespace Library.Controllers {
                 PostalCode = user.PostalCode,
                 ImageData = user.ImageData,
                 ImageMimeType = user.ImageMimeType,
-                Enabled= user.Enabled,
+                Enabled = user.Enabled,
+                EmailConfirmed = user.EmailConfirmed,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem() {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
@@ -137,7 +138,7 @@ namespace Library.Controllers {
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id, UserName, Email, Name, Surname, Address, City, PostalCode, ImageData, ImageMimeType, Enabled")] EditUserViewModel editUser, HttpPostedFileBase image = null, params string[] selectedRole) {
+        public async Task<ActionResult> Edit([Bind(Include = "Id, UserName, Email, Name, Surname, Address, City, PostalCode, ImageData, ImageMimeType, Enabled, EmailConfirmed")] EditUserViewModel editUser, HttpPostedFileBase image = null, params string[] selectedRole) {
             if (ModelState.IsValid) {
                 var user = await UserManager.FindByIdAsync(editUser.Id);
                 if (user == null) {
@@ -152,6 +153,7 @@ namespace Library.Controllers {
                 user.City = editUser.City;
                 user.PostalCode = editUser.PostalCode;
                 user.Enabled = editUser.Enabled;
+                user.EmailConfirmed = editUser.EmailConfirmed;
 
                 if (image != null) {
                     user.ImageMimeType = image.ContentType;

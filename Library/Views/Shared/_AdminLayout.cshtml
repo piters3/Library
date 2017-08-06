@@ -44,8 +44,9 @@
                 </div>
                 <ul class="sidebar-menu">
                     <li class="@Html.IsActive("Index", "PanelAdmin")"><a href="@Url.Action("Index","PanelAdmin")"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
-                    <li class="@Html.IsActive("Index", "UsersAdmin")"><a href="@Url.Action("Index", "UsersAdmin")"><i class="fa fa-users"></i><span>Zarządzaj użytkownikami</span></a></li>
-                    <li class="@Html.IsActive("Index", "RolesAdmin")"><a href="@Url.Action("Index", "RolesAdmin")"><i class="fa fa-key"></i><span>Zarządzaj rolami</span></a></li>
+                    <li class="@Html.IsActive("Index", "UsersAdmin")"><a href="@Url.Action("Index", "UsersAdmin")"><i class="fa fa-users"></i><span>Użytkownicy</span></a></li>
+                    <li class="@Html.IsActive("Index", "RolesAdmin")"><a href="@Url.Action("Index", "RolesAdmin")"><i class="fa fa-key"></i><span>Role</span></a></li>
+                    <li class="@Html.IsActive("Index", "ContactAdmin")"><a href="@Url.Action("Index", "ContactAdmin")"><i class="fa fa-envelope-o"></i><span>Wiadomości</span></a></li>
                 </ul>
             </section>
         </aside>

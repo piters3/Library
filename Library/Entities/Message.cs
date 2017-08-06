@@ -9,17 +9,25 @@ using System.Web;
 
 namespace Library.Entities {
     public class Message {
+
+        [Key]
         public int MessageId { get; set; }
 
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         [Required(ErrorMessage = "Proszę podać treść wiadomości")]
         [Display(Name = "Nazwa")]
         public string Content { get; set; }
-
+   
         public int SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        [Display(Name = "Temat")]
+        public virtual Subject Subject { get; set; }
 
-        public string DateTime { get; set; }
+        public DateTime Data { get; set; }
+
+
     }
 }

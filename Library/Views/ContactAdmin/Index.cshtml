@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Library.Entities.Subject>
+
+@{
+    ViewBag.Title = "Wiadomości";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <table class="table table-hover table-bordered" id="messagesTable">
+            <thead>
+                <tr>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        Ostatnia wiadomość
+                    </th>
+                    <th>
+                        Data wiadomości
+                    </th>
+                    <th>
+                        Czytaj
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @item.Messages.First().User.UserName
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @item.Messages.Last().Content
+                        </td>
+                        <td>
+                            @item.Messages.Last().Data
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Conversation", "ContactAdmin", new { id = item.SubjectId })"><i class="fa fa-envelope-open-o"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/admin/dataTables")
+    <script type="text/javascript">$('#messagesTable').DataTable();</script>
+}

@@ -1,0 +1,56 @@
+﻿@model Library.Models.ConversationViewModel
+
+@{
+    ViewBag.Title = "Konwersacja";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "ContactAdmin")">Wiadomości</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title z użytkownikiem "@Model.Messages.First().User.UserName"</h3>
+        <div class="messanger">
+            <div class="messages">
+                @foreach (var item in Model.Messages) {
+                    <div class="@(item.User.UserName == User.Identity.Name ? "message me" : "message")">
+                        <div class="conversation">
+                            @if (item.User.ImageData != null) {
+                                <img src="@Url.Action("GetImage", "Home" )" />
+                            } else {
+                                <img src="@Url.Action("GetDefaultImage", "Home" )" />
+                            }
+                        </div>
+                        <p class="info">@item.Data<br>@item.Content</p>
+                    </div>
+                }
+
+                @using (Html.BeginForm("Conversation", "ContactAdmin", FormMethod.Post, new { @class = "sender", role = "form" })) {
+                    @Html.AntiForgeryToken()
+                    if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            @Html.ValidationSummary(true, "")
+                        </div>
+                    }
+                    @Html.TextBoxFor(m => m.ReplyViewModel.Content, new { @class = "form-control", placeholder = "Odpowiedz" })
+                    @Html.ValidationMessageFor(m => m.ReplyViewModel.Content, "", new { @class = "text-danger" })
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-fw fa-paper-plane"></i></button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

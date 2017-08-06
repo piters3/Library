@@ -27,6 +27,9 @@
                     @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
                         <li class="@Html.IsActive("Index", "PanelAdmin")">@Html.ActionLink("Panel administratora", "Index", "PanelAdmin")</li>
                     }
+                    @if (Request.IsAuthenticated) {
+                        <li class="@Html.IsActive("Ask", "Contact")">@Html.ActionLink("Zadaj pytanie", "Ask", "Contact")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

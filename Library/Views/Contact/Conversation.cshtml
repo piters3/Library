@@ -1,0 +1,84 @@
+﻿@model Library.Models.ConversationViewModel
+@{
+    ViewBag.Title = "Konwersacja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <ul class="chat">
+                @foreach (var item in Model.Messages) {
+                    if (item.User.UserName == User.Identity.Name) {
+                        <li class="left clearfix">
+                            <span class="chat-img pull-left">
+                                @if (item.User.ImageData != null) {
+                                    <img src="@Url.Action("GetImage", "Home" )" class="img-circle" alt="User Avatar" />
+                                } else {
+                                    <img src="@Url.Action("GetDefaultImage", "Home" )" class="img-circle" alt="User Avatar" />
+                                }
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">@item.User.UserName</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>@item.Data
+                                    </small>
+                                </div>
+                                <p>
+                                    @item.Content
+                                </p>
+                            </div>
+                        </li>
+                    } else {
+                        <li class="right clearfix">
+                            <span class="chat-img pull-right">
+                                @if (item.User.ImageData != null) {
+                                    <img src="@Url.Action("GetImageById", "Home", new { id = item.UserId })" class="img-circle" alt="Admin Avatar" />
+                                } else {
+                                    <img src="@Url.Action("GetDefaultImage", "Home" )" class="img-circle" alt="Admin Avatar" />
+                                }
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class="text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>@item.Data
+                                    </small>
+                                    <small class="pull-right text-muted"></small>
+                                    <strong class="pull-right primary-font">@item.User.UserName</strong>
+                                </div>
+                                <p class="pull-right primary-font">
+                                    @item.Content
+                                </p>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <div class="input-group">
+                @using (Html.BeginForm("Conversation", "Contact", FormMethod.Post, new { role = "form" })) {
+                    @Html.AntiForgeryToken()
+                    if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            @Html.ValidationSummary(true, "")
+                        </div>
+                    }
+                    @Html.TextBoxFor(m => m.ReplyViewModel.Content, new { @class = "form-control input-sm", placeholder = "Odpowiedz" })
+                    @Html.ValidationMessageFor(m => m.ReplyViewModel.Content, "", new { @class = "text-danger" })
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning btn-sm" type="submit">
+                            Wyślij
+                        </button>
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

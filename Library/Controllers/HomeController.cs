@@ -36,5 +36,16 @@ namespace Library.Controllers {
             string type = "image/jpeg";
             return File(path, type);
         }
+
+
+        public async Task<FileContentResult> GetImageById(string id) {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user != null) {
+                return File(user.ImageData, user.ImageMimeType);
+            } else {
+                return null;
+            }
+        }
+
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Library.Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
@@ -44,12 +46,18 @@ namespace Library.Models {
 
         [Display(Name = "Data rejestracji")]
         public DateTime RegisterDate { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
         public ApplicationDbContext()
             : base("LibraryDB", throwIfV1Schema: false) {
         }
+
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Subject> Subjects { get; set; }
 
         /*static ApplicationDbContext() {
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());

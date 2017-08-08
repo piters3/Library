@@ -61,6 +61,12 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -169,8 +175,10 @@
     <Content Include="Scripts\Admin\plugins\pace.min.js" />
     <Content Include="Scripts\Admin\plugins\select2.min.js" />
     <Content Include="Scripts\Admin\plugins\sweetalert.min.js" />
-    <Content Include="Scripts\User\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\User\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Views\Manage\EditAccount.cshtml" />
     <Content Include="Views\PanelAdmin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
@@ -191,6 +199,22 @@
     <Content Include="Views\Contact\Ask.cshtml" />
     <Content Include="Views\Contact\Questions.cshtml" />
     <Content Include="Views\Contact\Conversation.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\CategoriesAdmin\Index.cshtml" />
+    <Content Include="Views\CategoriesAdmin\Edit.cshtml" />
+    <Content Include="Views\CategoriesAdmin\Details.cshtml" />
+    <Content Include="Views\CategoriesAdmin\Delete.cshtml" />
+    <Content Include="Views\BooksAdmin\Index.cshtml" />
+    <Content Include="Views\BooksAdmin\Edit.cshtml" />
+    <Content Include="Views\BooksAdmin\Details.cshtml" />
+    <Content Include="Views\BooksAdmin\Delete.cshtml" />
+    <Content Include="Views\BookCopiesAdmin\Index.cshtml" />
+    <Content Include="Views\ErrorPage\Oops.cshtml" />
+    <Content Include="Views\BookCopiesAdmin\Edit.cshtml" />
+    <Content Include="Views\BookCopiesAdmin\Details.cshtml" />
+    <Content Include="Views\BookCopiesAdmin\Delete.cshtml" />
+    <Content Include="Views\CategoriesAdmin\Create.cshtml" />
+    <Content Include="Views\BooksAdmin\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -207,19 +231,19 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Scripts\User\jquery-3.1.1.intellisense.js" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\User\bootstrap.js" />
     <Content Include="Scripts\User\bootstrap.min.js" />
-    <Content Include="Scripts\User\jquery-3.1.1.js" />
-    <Content Include="Scripts\User\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\User\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\User\jquery-3.1.1.slim.min.js" />
-    <None Include="Scripts\User\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\User\jquery.validate.js" />
-    <Content Include="Scripts\User\jquery.validate.min.js" />
-    <Content Include="Scripts\User\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\User\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\User\modernizr-2.8.3.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\User\respond.js" />
     <Content Include="Scripts\User\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\User\respond.matchmedia.addListener.min.js" />
@@ -256,18 +280,27 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookCopiesAdminController.cs" />
+    <Compile Include="Controllers\BooksAdminController.cs" />
+    <Compile Include="Controllers\CategoriesAdminController.cs" />
     <Compile Include="Controllers\ContactAdminController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PanelAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Entities\Book.cs" />
+    <Compile Include="Entities\BookCopy.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Lending.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\Subject.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Infrastructure\HtmlHelpers.cs" />
     <Compile Include="Migrations\201708021012419_InitialCreate.cs" />
     <Compile Include="Migrations\201708021012419_InitialCreate.Designer.cs">
@@ -275,9 +308,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ContactViewModel.cs" />
+    <Compile Include="Models\ContactViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -1,0 +1,91 @@
+﻿@model Library.Entities.Book
+
+@{
+    ViewBag.Title = "Dodawanie książki";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "BooksAdmin")">Zarządzanie książkami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-10">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title</h3>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "BooksAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+                @Html.AntiForgeryToken()
+                if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        @Html.ValidationSummary(true, "")
+                    </div>
+                }
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Author, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Author, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Print, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Print, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Print, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("CategoryId", ViewBag.CategoryId as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PublishedDate, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.PublishedDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PublishedDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Pages, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Pages, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Pages, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-8">
+                            <button class="btn btn-primary icon-btn" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Zapisz</button>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

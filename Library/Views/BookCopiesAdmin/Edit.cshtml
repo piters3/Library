@@ -1,38 +1,39 @@
-﻿@model Library.Models.RoleViewModel
-
+﻿@model Library.Entities.BookCopy
 @{
-    ViewBag.Title = "Edytowanie roli " + '"' + Model.Name + '"';
+    ViewBag.Title = "Edytowanie egzemplarza książki";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 @section Breadcrumb{
     <div>
-        <h1>@ViewBag.Title</h1>
         <ul class="breadcrumb side">
             <li><i class="fa fa-home fa-lg"></i></li>
-            <li><a href="@Url.Action("Index", "RolesAdmin")">Zarządznie rolami</a></li>
+            <li><a href="@Url.Action("Index", "BookCopiesAdmin")">Zarządzanie egzemplarzami książek</a></li>
             <li>@ViewBag.Title</li>
         </ul>
     </div>
 }
 
-<div class="col-md-6">
+<div class="col-md-10">
     <div class="card">
-        <h3 class="card-title">@ViewBag.Title</h3>
+        <h3 class="card-title">@ViewBag.Title "@Model.Book.Title"</h3>
         <div class="card-body">
-            @using (Html.BeginForm("Edit", "RolesAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            @using (Html.BeginForm("Edit", "BookCopiesAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
                 @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.BookCopyId)
+                @Html.HiddenFor(model => model.BookId)
                 if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
                     <div class="alert alert-dismissible alert-danger">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         @Html.ValidationSummary(true, "")
+
                     </div>
                 }
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,3 +49,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

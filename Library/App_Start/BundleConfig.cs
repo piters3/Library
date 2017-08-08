@@ -4,13 +4,13 @@ namespace Library {
     public class BundleConfig {
         public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/User/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/User/jquery.validate*"));
+                        "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-            "~/Scripts/User/modernizr-*"));
+            "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/User/bootstrap.js",
@@ -40,6 +40,10 @@ namespace Library {
             bundles.Add(new ScriptBundle("~/bundles/admin/dataTables").Include(
                         "~/Scripts/Admin/plugins/jquery.dataTables.min.js",
                         "~/Scripts/Admin/plugins/dataTables.bootstrap.min.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+                        "~/Scripts/jquery.signalR-2.2.2.min.js"
                         ));
 
         }

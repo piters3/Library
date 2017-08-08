@@ -1,0 +1,69 @@
+﻿@model Library.Entities.Category
+
+@{
+    ViewBag.Title = "Szczegóły kategorii";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "CategoriesAdmin")">Zarządzanie kategoriami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title "@Model.Name"</h3>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    Nazwa kategorii
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+            <h3>Lista książek w tej kategorii</h3>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tytuł
+                            </th>
+                            <th>
+                                Autor
+                            </th>
+                            <th>
+                                Wydawnictwo
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Books) {
+                            <tr>
+                                <td>
+                                    @item.Title
+                                </td>
+                                <td>
+                                    @item.Author
+                                </td>
+                                <td>
+                                    @item.Print
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+           
+            <p>
+                @Html.ActionLink("Edytuj", "Edit", new { id = Model.CategoryId }) |
+                @Html.ActionLink("Powrót do listy", "Index")
+            </p>
+
+        </div>
+    </div>
+</div>

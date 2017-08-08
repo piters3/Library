@@ -1,0 +1,69 @@
+﻿@model Library.Entities.Book
+@{
+    ViewBag.Title = "Szczegóły książki";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "UsersAdmin")">Zarządzanie książkami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title "@Model.Title"</h3>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Author)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Author)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PublishedDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PublishedDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Pages)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Pages)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </dl>
+            
+            <p>
+                @Html.ActionLink("Edytuj", "Edit", new { id = Model.BookId }) |
+                @Html.ActionLink("Powrót do listy", "Index")
+            </p>
+
+        </div>
+    </div>
+</div>
+
+

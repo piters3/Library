@@ -1,16 +1,15 @@
-﻿@model Library.Models.RoleViewModel
+﻿@model Library.Entities.Category
 
 @{
-    ViewBag.Title = "Edytowanie roli " + '"' + Model.Name + '"';
+    ViewBag.Title = "Dodawanie kategorii";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 @section Breadcrumb{
     <div>
-        <h1>@ViewBag.Title</h1>
         <ul class="breadcrumb side">
             <li><i class="fa fa-home fa-lg"></i></li>
-            <li><a href="@Url.Action("Index", "RolesAdmin")">Zarządznie rolami</a></li>
+            <li><a href="@Url.Action("Index", "CategoriesAdmin")">Zarządzanie kategoriami</a></li>
             <li>@ViewBag.Title</li>
         </ul>
     </div>
@@ -20,7 +19,7 @@
     <div class="card">
         <h3 class="card-title">@ViewBag.Title</h3>
         <div class="card-body">
-            @using (Html.BeginForm("Edit", "RolesAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            @using (Html.BeginForm("Create", "CategoriesAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
                 @Html.AntiForgeryToken()
                 if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
                     <div class="alert alert-dismissible alert-danger">

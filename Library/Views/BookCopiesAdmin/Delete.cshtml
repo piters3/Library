@@ -1,0 +1,40 @@
+﻿@model Library.Entities.BookCopy
+@{
+    ViewBag.Title = "Usuwanie egzemlarza książki";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("Index", "BookCopiesAdmin")">Zarządzanie egzemplarzami książek</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<h3>Jesteś pewny, że chcesz usunąć tą książkę?</h3>
+
+<div class="col-md-10">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title "@Model.Book.Title"</h3>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Title)
+                </dd>
+            </dl>
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                    @Html.ActionLink("Powrót do listy", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

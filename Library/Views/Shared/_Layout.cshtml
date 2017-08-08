@@ -30,6 +30,7 @@
                     @if (Request.IsAuthenticated) {
                         <li class="@Html.IsActive("Ask", "Contact")">@Html.ActionLink("Zadaj pytanie", "Ask", "Contact")</li>
                     }
+                    <li class="@Html.IsActive("Chat", "Home")">@Html.ActionLink("Chat", "Chat", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

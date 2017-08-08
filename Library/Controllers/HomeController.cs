@@ -47,5 +47,10 @@ namespace Library.Controllers {
             }
         }
 
+
+        public ActionResult Chat() {
+            return View();
+        }
+
     }
 }

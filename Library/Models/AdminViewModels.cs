@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Library.Entities;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -44,12 +46,24 @@ namespace Library.Models {
         public string ImageMimeType { get; set; }
 
         [Display(Name = "Aktywacja mailem")]
-        public bool EmailConfirmed{ get; set; }
+        public bool EmailConfirmed { get; set; }
 
         [Display(Name = "Aktywność")]
         public bool Enabled { get; set; }
 
         [Display(Name = "Rola")]
         public IEnumerable<SelectListItem> RolesList { get; set; }
+    }
+
+    public class EditBookViewModel {
+        public Book Book { get; set; }
+
+        [Display(Name = "Kategoria")]
+        public SelectList Categories { get; set; }
+
+        public EditBookViewModel(Book book, IEnumerable categories) {
+            Book = book;
+            Categories = new SelectList(categories, "CategoryId", "Name", book.CategoryId);
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Library.Entities {
         [Key]
         public int MessageId { get; set; }
 
+        [Required]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }

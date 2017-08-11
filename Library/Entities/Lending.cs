@@ -17,6 +17,7 @@ namespace Library.Entities {
         [Display(Name = "Pożyczana książka")]
         public virtual Book Book { get; set; }
 
+        [Required]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         [Display(Name = "Użytkownik")]

@@ -68,7 +68,12 @@
                             @if (item.ReturnDate != null) {
                                 <span class="label label-success">Książka oddana</span>
                             } else {
-                                @item.DaysLeft
+
+                                if (item.DaysLeft > 0) {
+                                    <span class="label label-success">@item.DaysLeft</span>
+                                } else {
+                                    <span class="label label-danger">@item.DaysLeft</span>
+                                }
                             }
                         </td>
                         <td>

@@ -65,6 +65,8 @@ namespace Library.Models {
 
         public DbSet<Lending> Lendings { get; set; }
 
+        public DbSet<Rating> Ratings { get; set; }
+
 
         /*static ApplicationDbContext() {
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());

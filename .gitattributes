@@ -1,0 +1,3 @@
+packages/* linguist-vendored
+Library/Content/* linguist-vendored
+Library/Scripts/* linguist-vendored

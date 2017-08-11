@@ -37,5 +37,14 @@ namespace Library.Entities {
 
         [Display(Name = "Opis")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Proszę ilość dostępnych egzemplarzy")]
+        [Display(Name = "Ilość dostępnych egzemplarzy")]
+        public int Amount { get; set; }
+
+        [Display(Name = "Okładka")]
+        public byte[] ImageData { get; set; }
+
+        public string ImageMimeType { get; set; }
     }
 }

@@ -1,0 +1,71 @@
+﻿@model Library.Entities.Book
+@{
+    ViewBag.Title = "BookDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageData)
+        </dt>
+        <dd>
+            @if (Model.ImageData != null) {
+                <img src="@Url.Action("GetCoverImageById", "Home", new { id = Model.BookId})" class="catalog" />
+            } else {
+                <img src="@Url.Action("GetDefaultCoverImage", "Home" )" class="catalog" />
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PublishedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pages)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pages)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    @if (Request.IsAuthenticated && Model.Amount != 0) {
+        using (Html.BeginForm("Borrow", "Catalog", new { id = Model.BookId }, FormMethod.Post, new { role = "form" })) {
+            @Html.AntiForgeryToken()
+            <p>
+                <input type="submit" value="Wypożycz" class="btn btn-danger" />
+            </p>
+        }
+    } else if (Request.IsAuthenticated && Model.Amount == 0) {
+        <b>BRAK DOSTĘPNYCH EGZEMPLARZY</b>
+    } else if (!Request.IsAuthenticated && Model.Amount != 0) {
+        <b>ZALOGUJ SIĘ ABY WYPOŻYCZYĆ</b>
+    }
+
+
+</div>

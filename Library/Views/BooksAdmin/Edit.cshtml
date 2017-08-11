@@ -19,16 +19,26 @@
     <div class="card">
         <h3 class="card-title">@ViewBag.Title "@Model.Book.Title"</h3>
         <div class="card-body">
-            @using (Html.BeginForm("Edit", "BooksAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            @using (Html.BeginForm("Edit", "BooksAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.Book.BookId)
                 if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
                     <div class="alert alert-dismissible alert-danger">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         @Html.ValidationSummary(true, "")
-
                     </div>
                 }
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Book.ImageData, new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @if (Model.Book.ImageData != null) {
+                            <img src="@Url.Action("GetCoverImageById", "Home", new { id = Model.Book.BookId})" class="cover" />
+                        } else {
+                            <img src="@Url.Action("GetDefaultCoverImage", "Home" )" class="cover" />
+                        }
+                        <input type="file" name="Image">
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Book.Title, new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
@@ -36,34 +46,34 @@
                         @Html.ValidationMessageFor(model => model.Book.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Book.Author, new { @class = "control-label col-md-3" })
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.Book.Author, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Book.Author, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Author, new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Book.Author, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Author, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Book.Print, new { @class = "control-label col-md-3" })
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.Book.Print, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Book.Print, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Print, new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Book.Print, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Print, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Categories, new { @class = "control-label col-md-3" })
-                    <div class="col-md-8">
-                        @Html.DropDownList("Book.CategoryId", Model.Categories, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Book.CategoryId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Categories, new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("Book.CategoryId", Model.Categories, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.CategoryId)
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Book.PublishedDate, new { @class = "control-label col-md-3" })
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.Book.PublishedDate, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Book.PublishedDate, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.PublishedDate, new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Book.PublishedDate, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.PublishedDate, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Book.Pages, new { @class = "control-label col-md-3" })
                         <div class="col-md-8">
@@ -76,6 +86,13 @@
                         <div class="col-md-8">
                             @Html.TextAreaFor(model => model.Book.Description, new { @class = "form-control", rows = 15 })
                             @Html.ValidationMessageFor(model => model.Book.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Amount, new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Book.Amount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Amount, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">

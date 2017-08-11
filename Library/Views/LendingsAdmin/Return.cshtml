@@ -1,0 +1,51 @@
+﻿@model Library.Entities.Lending
+@{
+    ViewBag.Title = "Zwracanie książki";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("All", "UsersAdmin")">Zarządzanie książkami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<h3>Jesteś pewny, że chcesz zwrócić tą książkę?</h3>
+
+<div class="col-md-10">
+    <div class="card">
+        <div class="card-body">
+            Książka:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Title)
+                </dd>
+
+
+            </dl>
+            Pożyczający:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.UserName)
+                </dd>
+            </dl>
+            @using (Html.BeginForm("Return", "LendingsAdmin", new { id = Model.LendId }, FormMethod.Post, new { role = "form" })) {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Zwróć!" class="btn btn-success" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

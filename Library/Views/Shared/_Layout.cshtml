@@ -31,6 +31,7 @@
                         <li class="@Html.IsActive("Ask", "Contact")">@Html.ActionLink("Zadaj pytanie", "Ask", "Contact")</li>
                     }
                     <li class="@Html.IsActive("Chat", "Home")">@Html.ActionLink("Chat", "Chat", "Home")</li>
+                    <li class="@Html.IsActive("Index", "Catalog")">@Html.ActionLink("Katalog", "Index", "Catalog")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -47,9 +48,9 @@
         }
         @RenderBody()
     </div>
-    <div id="footer">
+    @*<div id="footer">
         <p>&copy; @DateTime.Now.Year - Biblioteka Piotera</p>
-    </div>
+    </div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

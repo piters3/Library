@@ -26,9 +26,14 @@ namespace Library.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Book book) {
+        public ActionResult Create(Book book, HttpPostedFileBase image = null) {
             if (ModelState.IsValid) {
                 db.Books.Add(book);
+                if (image != null) {
+                    book.ImageMimeType = image.ContentType;
+                    book.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(book.ImageData, 0, image.ContentLength);
+                }
                 db.SaveChanges();
                 TempData["message"] = string.Format("Książka została dodana!");
                 return RedirectToAction("Index");
@@ -54,8 +59,13 @@ namespace Library.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Book book) {
+        public ActionResult Edit(Book book, HttpPostedFileBase image = null) {
             if (ModelState.IsValid) {
+                if (image != null) {
+                    book.ImageMimeType = image.ContentType;
+                    book.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(book.ImageData, 0, image.ContentLength);
+                }
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["message"] = string.Format("Książka została zedytowana!");

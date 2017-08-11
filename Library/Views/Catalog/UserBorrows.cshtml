@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Library.Entities.Lending>
+@{
+    ViewBag.Title = "UserBorrows";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Data wypożyczenia
+                </th>
+                <th>
+                    Tytuł
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Wydawnictwo
+                </th>
+                <th>
+                    Data oddania
+                </th>
+                <th>
+                    Dni do oddania
+                </th>
+                <th>
+                    Kara za przetrzymanie
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @item.BorrowDate
+                    </td>
+                    <td>
+                        @item.Book.Title
+                    </td>
+                    <td>
+                        @item.Book.Author
+                    </td>
+                    <td>
+                        @item.Book.Print
+                    </td>
+                    <td>
+                        @if (item.ReturnDate == null) {
+                            <b>Nieoddana</b>
+                        } else {
+                            @item.ReturnDate
+                        }
+                    </td>
+                    <td>
+                        @item.DaysLeft
+                    </td>
+                    <td>
+                        @item.FinedAmount
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

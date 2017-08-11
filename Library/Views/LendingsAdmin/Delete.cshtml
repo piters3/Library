@@ -1,0 +1,82 @@
+﻿@model Library.Entities.Lending
+@{
+    ViewBag.Title = "Usuwanie wypożyczenia";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("All", "UsersAdmin")">Zarządzanie książkami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<h3>Jesteś pewny, że chcesz usunąć to wypożyczenie?</h3>
+
+<div class="col-md-10">
+    <div class="card">
+        <div class="card-body">
+            Użytkownik:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Name)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Name)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Surname)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Surname)
+                    </dd>
+                }              
+            </dl>
+
+            Wypożyczona książka:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Author)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Author)
+                </dd>           
+            </dl>
+
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                    @Html.ActionLink("Powrót do listy", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

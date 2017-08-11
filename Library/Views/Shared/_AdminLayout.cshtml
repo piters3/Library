@@ -39,7 +39,7 @@
                     <div class="pull-left info">
                         <p>@User.Identity.Name</p>
                         <p class="designation">Administrator</p>
-                        
+
                     </div>
                 </div>
                 <ul class="sidebar-menu">
@@ -49,7 +49,14 @@
                     <li class="@Html.IsActive("Index", "ContactAdmin")"><a href="@Url.Action("Index", "ContactAdmin")"><i class="fa fa-envelope-o"></i><span>Wiadomości</span></a></li>
                     <li class="@Html.IsActive("Index", "CategoriesAdmin")"><a href="@Url.Action("Index", "CategoriesAdmin")"><i class="fa fa-tags"></i><span>Kategorie książek</span></a></li>
                     <li class="@Html.IsActive("Index", "BooksAdmin")"><a href="@Url.Action("Index", "BooksAdmin")"><i class="fa fa-book"></i><span>Książki</span></a></li>
-                    <li class="@Html.IsActive("Index", "BookCopiesAdmin")"><a href="@Url.Action("Index", "BookCopiesAdmin")"><i class="fa fa-files-o"></i><span>Egzemplarze książek</span></a></li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-handshake-o"></i><span>Wypożyczenia</span><i class="fa fa-angle-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li class="@Html.IsActive("All", "LendingsAdmin")"><a href="@Url.Action("All", "LendingsAdmin")"><i class="fa fa-exchange"></i><span>Wszystkie</span></a></li>
+                            <li class="@Html.IsActive("Active", "LendingsAdmin")"><a href="@Url.Action("Active", "LendingsAdmin")"><i class="fa fa-heart"></i><span>Aktywne</span></a></li>
+                            <li class="@Html.IsActive("Archive", "LendingsAdmin")"><a href="@Url.Action("Archive", "LendingsAdmin")"><i class="fa fa-archive"></i><span>Archiwum</span></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </section>
         </aside>

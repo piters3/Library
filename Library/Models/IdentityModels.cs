@@ -61,8 +61,6 @@ namespace Library.Models {
 
         public DbSet<Book> Books { get; set; }
 
-        public DbSet<BookCopy> BookCopies { get; set; }
-
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Lending> Lendings { get; set; }

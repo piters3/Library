@@ -42,6 +42,9 @@
                         @Html.DisplayNameFor(model => model.Description)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
                         Akcje
                     </th>
                 </tr>
@@ -68,7 +71,10 @@
                             @item.Pages
                         </td>
                         <td>
-                            @item.Description.Substring(0, 50) [...]
+                            @item.Description.Substring(0, item.Description.Length <50 ? item.Description.Length : 50) [...]
+                        </td>
+                        <td>
+                            @item.Amount
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", "BooksAdmin", new { id = item.BookId })"><i cla><i class="fa fa-pencil-square-o"></i></a>

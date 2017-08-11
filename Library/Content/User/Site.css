@@ -117,3 +117,8 @@ input[type="checkbox"].input-validation-error {
     height: 50px;
     width: 50px;
 }
+
+.catalog {
+    max-width: 150px;
+    height: auto;
+}

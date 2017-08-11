@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 namespace Library.Controllers {
     public class HomeController : Controller {
 
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager {
             get {
@@ -47,6 +49,20 @@ namespace Library.Controllers {
             }
         }
 
+        public FileContentResult GetCoverImageById(int id) {
+            var book = db.Books.Find(id);
+            if (book != null) {
+                return File(book.ImageData, book.ImageMimeType);
+            } else {
+                return null;
+            }
+        }
+
+        public FilePathResult GetDefaultCoverImage() {
+            string path = "~\\Content\\Img\\defaultCover.jpg";
+            string type = "image/jpeg";
+            return File(path, type);
+        }
 
         public ActionResult Chat() {
             return View();

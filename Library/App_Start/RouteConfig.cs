@@ -6,6 +6,12 @@ namespace Library {
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Catalog",
+            //    url: "{controller}/{action}/{category}",
+            //    defaults: new { controller = "Catalog", action = "Index", category = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

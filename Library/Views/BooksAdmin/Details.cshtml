@@ -20,6 +20,16 @@
         <div class="card-body">
             <dl class="dl-horizontal">
                 <dt>
+                    @Html.DisplayNameFor(model => model.ImageData)
+                </dt>
+                <dd>
+                    @if (Model.ImageData != null) {
+                        <img src="@Url.Action("GetCoverImageById", "Home", new { id = Model.BookId})" class="cover" />
+                    } else {
+                        <img src="@Url.Action("GetDefaultCoverImage", "Home" )" class="cover" />
+                    }
+                </dd>
+                <dt>
                     @Html.DisplayNameFor(model => model.Title)
                 </dt>
                 <dd>
@@ -55,8 +65,14 @@
                 <dd>
                     @Html.DisplayFor(model => model.Description)
                 </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Amount)
+                </dd>
             </dl>
-            
+
             <p>
                 @Html.ActionLink("Edytuj", "Edit", new { id = Model.BookId }) |
                 @Html.ActionLink("Powrót do listy", "Index")

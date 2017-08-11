@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Library.Entities.Lending>
+@{
+    //ViewBag.Title = "Wypożyczenia";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <a href="@Url.Action("Create", "LendingsAdmin")"><i class="fa fa-user-plus"></i>Wypożycz książkę</a>
+        <table class="table table-hover table-bordered" id="lendingsTable">
+            <thead>
+                <tr>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book.Author)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BorrowDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DaysLeft)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReturnDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FinedAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Remarks)
+                    </th>
+                    <th>
+                        Akcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @item.User.UserName
+                        </td>
+                        <td>
+                            @item.Book.Title
+                        </td>
+                        <td>
+                            @item.Book.Author
+                        </td>
+                        <td>
+                            @item.BorrowDate
+                        </td>
+                        <td>
+                            @if (item.ReturnDate != null) {
+                                <span class="label label-success">Książka oddana</span>
+                            } else {
+                                @item.DaysLeft
+                            }
+                        </td>
+                        <td>
+                            @if (item.ReturnDate == null) {
+                                <span class="label label-danger">Nieoddana</span>
+                            } else {
+                                <span class="label label-success">@item.ReturnDate</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.FinedAmount == 0 || item.FinedAmount == null) {
+                                <p>Brak</p>
+                            } else {
+                                @item.FinedAmount
+                            }
+                        </td>
+                        <td>
+                            @if (item.Remarks == null) {
+                                <p>Brak</p>
+                            } else {
+                                @item.Remarks
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "LendingsAdmin", new { id = item.LendId })"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                            <a href="@Url.Action("Details", "LendingsAdmin", new { id = item.LendId })"><i class="fa fa-eye fa-2x"></i></a>
+                            <a href="@Url.Action("Delete", "LendingsAdmin", new { id = item.LendId })"><i class="fa fa-trash fa-2x"></i></a>
+                            @if (item.ReturnDate != null) {
+                                <a href="#">
+                                    <span class="fa-stack fa-1x">
+                                        <i class="fa fa-reply fa-stack-1x"></i>
+                                        <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                                    </span>
+                                </a>
+                            } else {
+                                <a href="@Url.Action("Return", "LendingsAdmin", new { id = item.LendId })"><i class="fa fa-reply fa-2x"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/admin/dataTables")
+    <script type="text/javascript">$('#lendingsTable').DataTable();</script>
+}
+

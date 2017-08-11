@@ -1,0 +1,181 @@
+﻿@model Library.Entities.Lending
+@{
+    ViewBag.Title = "Szczegóły wypożyczenia";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("All", "LendingsAdmin")">Zarządzanie wypożyczeniami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <h3 class="card-title">@ViewBag.Title "@Model.Book.Title"</h3>
+        <div class="card-body">
+            Użytkownik:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Name)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Name)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Surname)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Surname)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Address)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Address)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.City)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.City)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.PostalCode)
+                </dt>
+                @if (Model.User.Name == null) {
+                    <dd>
+                        Brak danych
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.User.PostalCode)
+                    </dd>
+                }
+                <dt>
+                    Szczegóły użytkownika
+                </dt>
+                <dd>
+                    @Html.ActionLink("Klik", "Details", "UsersAdmin", new { id = Model.UserId }, null)
+                </dd>
+            </dl>
+
+            Wypożyczył:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Author)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Author)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Print)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Print)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.PublishedDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.PublishedDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.BorrowDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BorrowDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </dt>
+                @if (Model.ReturnDate == null) {
+                    <dd>
+                        Nieoddana
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.ReturnDate)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.FinedAmount)
+                </dt>
+                @if (Model.FinedAmount == 0) {
+                    <dd>
+                        Brak
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.FinedAmount)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.Remarks)
+                </dt>
+                @if (Model.Remarks == null) {
+                    <dd>
+                        Brak
+                    </dd>
+                } else {
+                    <dd>
+                        @Html.DisplayFor(model => model.Remarks)
+                    </dd>
+                }
+                <dt>
+                    Szczegóły książki
+                </dt>
+                <dd>
+                    @Html.ActionLink("Klik", "Details", "BooksAdmin", new { id = Model.BookId }, null)
+                </dd>
+            </dl>
+            <p>
+                @Html.ActionLink("Edytuj", "Edit", new { id = Model.LendId }) |
+                @Html.ActionLink("Powrót do listy", "All")
+            </p>
+
+        </div>
+    </div>
+</div>
+
+

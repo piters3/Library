@@ -122,3 +122,76 @@ input[type="checkbox"].input-validation-error {
     max-width: 150px;
     height: auto;
 }
+
+.bookDetails {
+    max-width: 230px;
+    height: auto;
+}
+
+div.stars {
+    width: 145px;
+}
+
+input.star {
+    display: none;
+}
+
+label.star {
+    float: right;
+    transition: all .2s;   
+}
+
+input.star:checked ~ label.star:before {
+    /*content: url('../Img/on.png');*/
+    transition: all .25s;
+    background-image: url('../Img/on.png');
+    background-size: 29px 25px;
+    display: inline-block;
+    width: 29px;
+    height: 25px;
+    content: "";
+}
+
+label.star:hover {
+    transform: rotate(-15deg) scale(1.3);
+}
+
+label.star:before {
+    /*content: url('../Img/off.png');*/
+    background-image: url('../Img/off.png');
+    background-size: 29px 25px;
+    display: inline-block;
+    width: 29px;
+    height: 25px;
+    content: "";
+    cursor: pointer;
+}
+
+.book {
+    border-bottom: 1px solid #dddddd;
+    display: block;
+    float: left;
+    /*width: 100%;*/
+    padding-top: 10px;
+    padding-bottom: 15px;
+    background-color: #ffffff;
+    /*min-height: 156px;*/
+}
+
+.info {
+    vertical-align: top;
+    position: relative;
+    float: left;
+    display: inline-block;
+    font-size: 11px;
+    width: 650px;
+    padding-left: 0;
+}
+
+.cover {
+    vertical-align: top;
+    position: relative;
+    float: left;
+    display: inline-block;
+    margin-right: 10px;
+}

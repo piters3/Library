@@ -63,9 +63,22 @@ namespace Library.Controllers {
         }
 
 
-        [HttpPost]
+
+        public ActionResult Borrow(int? id) {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null) {
+                return HttpNotFound();
+            }
+
+            return View(book);
+        }
+
+        [HttpPost, ActionName("Borrow")]
         [ValidateAntiForgeryToken]
-        public ActionResult Borrow(int id) {
+        public ActionResult BorrowConfirmed(int id) {
             int daysToBorrow = 14;
             Book book = db.Books.Find(id);
 
@@ -90,10 +103,39 @@ namespace Library.Controllers {
             return RedirectToAction("Index", "Manage", id);
         }
 
+
         public ActionResult UserBorrows() {
             string userId = User.Identity.GetUserId();
             var borrows = db.Lendings.Where(x => x.UserId == userId);
             return View(borrows.ToList());
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rate(int id, int rate) {
+            Book book = db.Books.Find(id);
+            var userId = User.Identity.GetUserId();
+
+            if (book.Ratings.Any(x => x.UserId == userId)) {
+                TempData["error"] = string.Format("Już głosowałeś na tą książkę!!!");
+                return RedirectToAction("BookDetails", new { id = id });
+            }
+
+            Rating rating = new Rating {
+                UserId = userId,
+                BookId = id,
+                Rate = rate
+            };
+
+            db.Ratings.Add(rating);
+
+            book.AverageRatig = book.Ratings.Average(x => x.Rate);
+            db.Entry(book).State = EntityState.Modified;
+
+            db.SaveChanges();
+            TempData["message"] = string.Format("Ocena została dodana!");
+            return RedirectToAction("BookDetails", new { id = id });
         }
     }
 }

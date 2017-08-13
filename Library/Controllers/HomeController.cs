@@ -64,6 +64,12 @@ namespace Library.Controllers {
             return File(path, type);
         }
 
+        public FilePathResult GetImageByRating(int id) {
+            string path = "~\\Content\\Img\\" + id + ".png";
+            string type = "image/png";
+            return File(path, type);
+        }
+
         public ActionResult Chat() {
             return View();
         }

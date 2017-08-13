@@ -14,7 +14,7 @@
     </p>
 }
 
-<div class="col-md-2">
+<div class="col-md-2 bo">
     @foreach (var item in ViewBag.cat) {
         @Html.ActionLink((string)item.Name, "Index", "Catalog", new { category = item.Name }, null)<br />
     }
@@ -22,24 +22,29 @@
 
 <div class="col-md-10">
     @foreach (var item in Model) {
-
-        if (item.ImageData != null) {
-            <img src="@Url.Action("GetCoverImageById", "Home", new { id = item.BookId})" class="catalog" />
-        } else {
-            <img src="@Url.Action("GetDefaultCoverImage", "Home" )" class="catalog" />
-        }
-
-        <p>@Html.ActionLink((string)item.Title, "BookDetails", "Catalog", new { id = item.BookId }, null)</p>
-        <p>@item.Print</p>
-        <p>@item.Author</p>
-        <p>@item.Description.Substring(0, item.Description.Length < 150 ? item.Description.Length : 150) [...]@Html.ActionLink("więcej", "BookDetails", "Catalog", new { id = item.BookId }, null)</p>
-        if (item.Amount == 0) {
-            <b>BRAK DOSTĘPNYCH EGZEMPLARZY</b>
-        }
-        <hr />
-
+        <div class="col-md-3">
+            @if (item.ImageData != null) {
+                <img src="@Url.Action("GetCoverImageById", "Home", new { id = item.BookId})" class="catalog" />
+            } else {
+                <img src="@Url.Action("GetDefaultCoverImage", "Home" )" class="catalog" />
+            }
+        </div>
+        <div class="col-md-7">
+            <p>@Html.ActionLink((string)item.Title, "BookDetails", "Catalog", new { id = item.BookId }, null)</p>
+            <p>@item.Print</p>
+            <p>@item.Author</p>
+            <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(item.AverageRatig)})" class="catalog" /> <br />
+            <p>@item.Description.Substring(0, item.Description.Length < 150 ? item.Description.Length : 150) [...]@Html.ActionLink("więcej", "BookDetails", "Catalog", new { id = item.BookId }, null)</p>
+            @if (item.Amount == 0) {
+                <b>BRAK DOSTĘPNYCH EGZEMPLARZY</b>
+            }
+        </div>
+        <div class="col-md-10">
+            <hr />
+        </div>
     }
-
+</div>
+<div class="col-md-10 text-center">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
@@ -51,13 +56,11 @@
         </p>
     }
 
-
     @using (Html.BeginForm("Index", "Catalog", FormMethod.Post)) {
         <p>
             Tylko dostępne: @Html.CheckBox("onlyAvailable", false)
         </p>
     }
-
 </div>
 
 @section Scripts {
@@ -70,7 +73,7 @@
         $('#limit').change(function () {
             var form = $(this).closest('form');
             form.get(0).submit();
-           
+
         });
     </script>
 }

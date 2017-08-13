@@ -165,8 +165,17 @@
   <ItemGroup>
     <Content Include="Content\Admin\font-awesome.min.css" />
     <Content Include="Content\Admin\main.css" />
+    <Content Include="Content\Img\0.png" />
+    <Content Include="Content\Img\1.png" />
+    <Content Include="Content\Img\2.png" />
+    <Content Include="Content\Img\3.png" />
+    <Content Include="Content\Img\4.png" />
+    <Content Include="Content\Img\5.png" />
     <Content Include="Content\Img\default.jpg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Img\defaultCover.jpg" />
+    <Content Include="Content\Img\off.png" />
+    <Content Include="Content\Img\on.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="packages.config" />
     <Content Include="Scripts\Admin\bootstrap.min.js" />
@@ -233,6 +242,10 @@
     <Content Include="Views\LendingsAdmin\Return.cshtml" />
     <Content Include="Views\RatingsAdmin\Index.cshtml" />
     <Content Include="Views\RatingsAdmin\Create.cshtml" />
+    <Content Include="Views\RatingsAdmin\Edit.cshtml" />
+    <Content Include="Views\RatingsAdmin\Details.cshtml" />
+    <Content Include="Views\RatingsAdmin\Delete.cshtml" />
+    <Content Include="Views\Catalog\Borrow.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

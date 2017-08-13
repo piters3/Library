@@ -48,5 +48,8 @@ namespace Library.Entities {
         public string ImageMimeType { get; set; }
 
         public virtual ICollection<Rating> Ratings { get; set; }
+
+        [Display(Name = "Średnia ocena")]
+        public double AverageRatig { get; set; }
     }
 }

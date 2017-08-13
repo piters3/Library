@@ -1,0 +1,95 @@
+﻿@model Library.Entities.Rating
+@{
+    ViewBag.Title = "Usuwanie oceny";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li><a href="@Url.Action("index", "RatingsAdmin")">Zarządzanie ocenami</a></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<h3>Jesteś pewny, że chcesz usunąć tą ocenę?</h3>
+
+<div class="col-md-10">
+    <div class="card">
+        <div class="card-body">
+            Użytkownik:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.UserName)
+                </dd>
+                <dt>
+                    Szczegóły użytkownika
+                </dt>
+                <dd>
+                    @Html.ActionLink("Klik", "Details", "UsersAdmin", new { id = Model.UserId }, null)
+                </dd>
+            </dl>
+
+            Oceninił:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Author)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Author)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Book.Print)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Book.Print)
+                </dd>
+                <dt>
+                    Szczegóły książki
+                </dt>
+                <dd>
+                    @Html.ActionLink("Klik", "Details", "BooksAdmin", new { id = Model.BookId }, null)
+                </dd>
+            </dl>
+            Na:
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Opinion)
+                </dt>
+                <dd>
+                    @if (Model.Opinion == null) {
+                        @:Brak
+                    } else {
+                        @Html.DisplayFor(model => model.Opinion)
+                    }
+                </dd>
+            </dl>
+
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Usuń" class="btn btn-danger" /> |
+                    @Html.ActionLink("Powrót do listy", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

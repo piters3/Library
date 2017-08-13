@@ -1,0 +1,26 @@
+﻿@model Library.Entities.Book
+@{
+    ViewBag.Title = "Wypożyczanie książki";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Jesteś pewny, że chcesz wypożyczyć tą książkę?</h3>
+
+<div class="col-md-10">
+    <div class="card">
+        <h3 class="card-title">"@Model.Title"</h3>
+        <div class="card-body">
+
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Wypożycz" class="btn btn-danger" /> |
+                    @Html.ActionLink("Powrót do listy", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

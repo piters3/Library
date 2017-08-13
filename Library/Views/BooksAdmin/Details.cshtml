@@ -71,8 +71,28 @@
                 <dd>
                     @Html.DisplayFor(model => model.Amount)
                 </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.AverageRatig)
+                </dt>
+                <dd>
+                    <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="cover" /> <br />
+                    @Html.DisplayFor(model => model.AverageRatig)
+                    <b>(</b> @Model.Ratings.Count()<b>)</b><br />
+                </dd>
+                @if (Model.AverageRatig != 0) {
+                    <dt>
+                        Oceny:
+                    </dt>
+                    <dd>
+                        @for (var i = 5; i >= 0; i--) {
+                    if (Model.Ratings.Where(x => x.Rate == i).Count() > 0) {
+                                <img src="@Url.Action("GetImageByRating", "Home", new { id = i })" class="cover" />
+                                <b>(</b>   @Model.Ratings.Where(x => x.Rate == i).Count()    <b>)</b><br />
+                            }
+                        }
+                    </dd>
+                }
             </dl>
-
             <p>
                 @Html.ActionLink("Edytuj", "Edit", new { id = Model.BookId }) |
                 @Html.ActionLink("Powrót do listy", "Index")
@@ -81,5 +101,3 @@
         </div>
     </div>
 </div>
-
-

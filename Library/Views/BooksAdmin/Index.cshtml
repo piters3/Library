@@ -36,10 +36,7 @@
                         @Html.DisplayNameFor(model => model.PublishedDate)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Pages)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
+                        @Html.DisplayNameFor(model => model.AverageRatig)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Amount)
@@ -68,18 +65,19 @@
                             @item.PublishedDate.ToShortDateString()
                         </td>
                         <td>
-                            @item.Pages
-                        </td>
-                        <td>
-                            @item.Description.Substring(0, item.Description.Length <50 ? item.Description.Length : 50) [...]
+                            @if (item.AverageRatig == 0) {
+                                @:Brak ocen
+                            } else {
+                                @item.AverageRatig
+                            }
                         </td>
                         <td>
                             @item.Amount
                         </td>
                         <td>
-                            <a href="@Url.Action("Edit", "BooksAdmin", new { id = item.BookId })"><i cla><i class="fa fa-pencil-square-o"></i></a>
-                            <a href="@Url.Action("Details", "BooksAdmin", new { id = item.BookId })"><i cla><i class="fa fa-eye"></i></a>
-                            <a href="@Url.Action("Delete", "BooksAdmin", new { id = item.BookId })"><i cla><i class="fa fa-trash"></i></a>
+                            <a href="@Url.Action("Edit", "BooksAdmin", new { id = item.BookId })"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="@Url.Action("Details", "BooksAdmin", new { id = item.BookId })"><i class="fa fa-eye"></i></a>
+                            <a href="@Url.Action("Delete", "BooksAdmin", new { id = item.BookId })"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 }

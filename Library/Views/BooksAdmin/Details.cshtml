@@ -75,9 +75,9 @@
                     @Html.DisplayNameFor(model => model.AverageRatig)
                 </dt>
                 <dd>
-                    <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="cover" /> <br />
-                    @Html.DisplayFor(model => model.AverageRatig)
-                    <b>(</b> @Model.Ratings.Count()<b>)</b><br />
+                    <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="cover" />
+                    @Html.DisplayFor(model => model.AverageRatig) / 5
+                    (@Model.Ratings.Count() głosów) <br />
                 </dd>
                 @if (Model.AverageRatig != 0) {
                     <dt>
@@ -92,6 +92,21 @@
                         }
                     </dd>
                 }
+                <dt>
+                    Opinie:
+                </dt>
+                <dd>
+                    @foreach (var item in Model.Opinions) {
+                        <blockquote>
+                            <p> @item.Content</p>
+                            <small>
+                                <cite title="Użytkownik">@item.User.UserName</cite>
+                            </small>
+                        </blockquote>
+                        <hr />
+                    }
+                </dd>
+
             </dl>
             <p>
                 @Html.ActionLink("Edytuj", "Edit", new { id = Model.BookId }) |

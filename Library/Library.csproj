@@ -246,6 +246,9 @@
     <Content Include="Views\RatingsAdmin\Details.cshtml" />
     <Content Include="Views\RatingsAdmin\Delete.cshtml" />
     <Content Include="Views\Catalog\Borrow.cshtml" />
+    <Content Include="Views\Catalog\AddOpinion.cshtml" />
+    <Content Include="Views\OpinionsAdmin\Index.cshtml" />
+    <Content Include="Views\OpinionsAdmin\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -320,6 +323,7 @@
     <Compile Include="Controllers\LendingsAdminController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OpinionsAdminController.cs" />
     <Compile Include="Controllers\PanelAdminController.cs" />
     <Compile Include="Controllers\RatingsAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -328,6 +332,7 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Lending.cs" />
     <Compile Include="Entities\Message.cs" />
+    <Compile Include="Entities\Opinion.cs" />
     <Compile Include="Entities\Rating.cs" />
     <Compile Include="Entities\Subject.cs" />
     <Compile Include="Global.asax.cs">

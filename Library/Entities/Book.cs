@@ -49,6 +49,8 @@ namespace Library.Entities {
 
         public virtual ICollection<Rating> Ratings { get; set; }
 
+        public virtual ICollection<Opinion> Opinions { get; set; }
+
         [Display(Name = "Średnia ocena")]
         public double AverageRatig { get; set; }
     }

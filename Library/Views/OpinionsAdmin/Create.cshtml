@@ -1,7 +1,7 @@
-﻿@model Library.Entities.Rating
+﻿@model Library.Entities.Opinion
 
 @{
-    ViewBag.Title = "Dodawanie oceny";
+    ViewBag.Title = "Dodawanie opinii";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <div>
         <ul class="breadcrumb side">
             <li><i class="fa fa-home fa-lg"></i></li>
-            <li><a href="@Url.Action("index", "RatingsAdmin")">Zarządzanie ocenami</a></li>
+            <li><a href="@Url.Action("index", "OpinionsAdmin")">Zarządzanie opiniami</a></li>
             <li>@ViewBag.Title</li>
         </ul>
     </div>
@@ -19,7 +19,7 @@
     <div class="card">
         <h3 class="card-title">@ViewBag.Title</h3>
         <div class="card-body">
-            @using (Html.BeginForm("Create", "RatingsAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            @using (Html.BeginForm("Create", "OpinionsAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
                 @Html.AntiForgeryToken()
                 if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
                     <div class="alert alert-dismissible alert-danger">
@@ -42,10 +42,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Rate, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Content, new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Rate, new SelectList(new[] { 1, 2, 3, 4, 5 }), new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.Content, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">

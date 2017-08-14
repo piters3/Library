@@ -1,0 +1,28 @@
+﻿@model Library.Entities.Opinion
+@{
+    ViewBag.Title = "Dodawanie opinii";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddOpinion", "Catalog", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    @Html.AntiForgeryToken()
+    if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) {
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @Html.ValidationSummary(true, "")
+        </div>
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
+            @Html.TextAreaFor(model => model.Content, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Wyślij" class="btn btn-primary" />
+        </div>
+    </div>
+
+}

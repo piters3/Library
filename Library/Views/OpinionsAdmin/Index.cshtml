@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Library.Entities.Rating>
+﻿@model IEnumerable<Library.Entities.Opinion>
 @{
-    ViewBag.Title = "Oceny książek";
+    ViewBag.Title = "Opinie książek";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -16,8 +16,8 @@
 
 <div class="col-md-12">
     <div class="card">
-        <a href="@Url.Action("Create", "RatingsAdmin")"><i class="fa fa-user-plus"></i>Nowa ocena</a>
-        <table class="table table-hover table-bordered" id="ratingsTable">
+        <a href="@Url.Action("Create", "OpinionsAdmin")"><i class="fa fa-user-plus"></i>Nowa opinia</a>
+        <table class="table table-hover table-bordered" id="opinionsTable">
             <thead>
                 <tr>
                     <th>
@@ -30,7 +30,7 @@
                         @Html.DisplayNameFor(model => model.Book.Author)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Rate)
+                        @Html.DisplayNameFor(model => model.Content)
                     </th>
                     <th>
                         Akcje
@@ -50,12 +50,12 @@
                             @item.Book.Author
                         </td>
                         <td>
-                            @item.Rate
+                            @item.Content
                         </td>
                         <td>
-                            <a href="@Url.Action("Edit", "RatingsAdmin", new { id = item.RatingId })"><i class="fa fa-pencil-square-o"></i></a>
-                            <a href="@Url.Action("Details", "RatingsAdmin", new { id = item.RatingId })"><i class="fa fa-eye"></i></a>
-                            <a href="@Url.Action("Delete", "RatingsAdmin", new { id = item.RatingId })"><i class="fa fa-trash"></i></a>
+                            <a href="@Url.Action("Edit", "OpinionsAdmin", new { id = item.OpinionId })"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="@Url.Action("Details", "OpinionsAdmin", new { id = item.OpinionId })"><i class="fa fa-eye"></i></a>
+                            <a href="@Url.Action("Delete", "OpinionsAdmin", new { id = item.OpinionId })"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 }
@@ -66,7 +66,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/admin/dataTables")
-    <script type="text/javascript">$('#ratingsTable').DataTable();</script>
+    <script type="text/javascript">$('#opinionsTable').DataTable();</script>
 }
 
 

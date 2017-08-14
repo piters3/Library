@@ -3,13 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Library.Entities {
-    public class Rating {
+    public class Opinion {
         [Key]
-        public int RatingId { get; set; }
+        public int OpinionId { get; set; }
 
         [Required]
         public int BookId { get; set; }
@@ -21,10 +19,10 @@ namespace Library.Entities {
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         [Display(Name = "Użytkownik")]
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }      
 
-        [Required(ErrorMessage = "Proszę podać ocenę książki")]
-        [Display(Name = "Ocena")]
-        public int Rate { get; set; }
+        [Required(ErrorMessage = "Proszę podać opinię książki")]
+        [Display(Name = "Opinia")]
+        public string Content { get; set; }
     }
 }

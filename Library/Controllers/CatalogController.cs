@@ -137,5 +137,31 @@ namespace Library.Controllers {
             TempData["message"] = string.Format("Ocena została dodana!");
             return RedirectToAction("BookDetails", new { id = id });
         }
+
+
+        public ActionResult AddOpinion() {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddOpinion(int id, Opinion opinion) {
+            Book book = db.Books.Find(id);
+            var userId = User.Identity.GetUserId();
+
+            if (book.Opinions.Any(x => x.UserId == userId)) {
+                TempData["error"] = string.Format("Już dodałeś opinię do tej książki!!!");
+                return RedirectToAction("BookDetails", new { id = id });
+            }
+
+            opinion.UserId = userId;
+            opinion.BookId = id;
+
+            db.Opinions.Add(opinion);
+            db.SaveChanges();
+            TempData["message"] = string.Format("Opinia została dodana!");
+            return RedirectToAction("BookDetails", new { id = id });
+        }
     }
 }

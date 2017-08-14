@@ -70,16 +70,6 @@
                 <dd>
                     @Html.DisplayFor(model => model.Rate)
                 </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Opinion)
-                </dt>
-                <dd>
-                    @if (Model.Opinion == null) {
-                        @:Brak
-                    } else {
-                        @Html.DisplayFor(model => model.Opinion)
-                    }
-                </dd>
             </dl>
 
             @using (Html.BeginForm()) {

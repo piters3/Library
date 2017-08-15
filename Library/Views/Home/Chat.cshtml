@@ -4,12 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Pierwsza odsłona - kiedyś się zrobi ładniej i sprawniej</h2>
-<div class="container">
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" />
-    <ul id="discussion"></ul>
+<div class="col-md-12">
+
+    <h2>Pierwsza odsłona - kiedyś się zrobi ładniej i sprawniej</h2>
+
+    <div class="col-md-6 col-md-offset-3 well bs-component">
+        <input type="text" id="message" class="form-control fc-center" placeholder="Wpisz treść..." style="display:inline">
+        <input type="button" id="sendmessage" value="Wyślij" class="btn btn-primary" />
+        <input type="hidden" id="displayname" />
+        <ul id="discussion"></ul>
+    </div>
 </div>
 
 @section scripts {
@@ -20,11 +24,11 @@
         $(function () {
             var chat = $.connection.chatHub;
             chat.client.addNewMessageToPage = function (name, message) {
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                $('#discussion').append('<strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '<br />');
             };
 
-            $('#displayname').val(prompt('Enter your name:', ''));
+            $('#displayname').val(prompt('Podaj nick:', ''));
             $('#message').focus();
 
             $.connection.hub.start().done(function () {

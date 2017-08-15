@@ -73,7 +73,7 @@
                         <b>(</b>   @Model.Ratings.Where(x => x.Rate == i).Count()    <b>)</b><br />
                     }
                 }
-            </dd>
+            </dd> 
         }
     </dl>
     <div class="col-md-offset-2">
@@ -98,9 +98,11 @@
         }
         <hr />
         <b>Opinie użytkowników:</b>
-        <div class="pull-right">
-            <a href="@Url.Action("AddOpinion", "Catalog", new { id = Model.BookId })">Dodaj opinię<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
-        </div>
+        @if (Request.IsAuthenticated) {
+            <div class="pull-right">
+                <a href="@Url.Action("AddOpinion", "Catalog", new { id = Model.BookId })">Dodaj opinię<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+            </div>
+        }
         @if (Model.Opinions.All(x => x.Content == null)) {
             <p>Brak opinii</p>
         } else {

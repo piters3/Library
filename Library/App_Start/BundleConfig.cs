@@ -18,7 +18,8 @@ namespace Library {
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/User/bootstrap.css",
-                      "~/Content/User/site.css"));
+                      "~/Content/User/site.css",
+                      "~/Content/Admin/font-awesome.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/Admin/css").Include(
                       "~/Content/Admin/main.css",

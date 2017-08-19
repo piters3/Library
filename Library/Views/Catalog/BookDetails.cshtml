@@ -2,7 +2,18 @@
 @{
     ViewBag.Title = "BookDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    AjaxOptions ajaxOpts = new AjaxOptions {
+        Url = Url.Action("Rate", "Catalog", new { id = Model.BookId }),
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "dataView",
+        Confirm = "Potwierdzasz oddanie głosu?"
+    };
 }
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+
+
 
 <div class="col-md-12">
 
@@ -54,33 +65,38 @@
             @Html.DisplayFor(model => model.Description)
             <hr />
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AverageRatig)
-        </dt>
-        <dd>
-            <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="catalog" />
-            @Html.DisplayFor(model => model.AverageRatig) / 5
-            (@Model.Ratings.Count() głosów) <br />
-        </dd>
-        @if (Model.AverageRatig != 0) {
+    </dl>
+
+    <div id="dataView">
+        <dl class="dl-horizontal">
             <dt>
-                Oceny:
+                @Html.DisplayNameFor(model => model.AverageRatig)
             </dt>
             <dd>
-                @for (var i = 5; i >= 0; i--) {
+                <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="catalog" />
+                @Html.DisplayFor(model => model.AverageRatig) / 5
+                (@Model.Ratings.Count() głosów) <br />
+            </dd>
+            @if (Model.AverageRatig != 0) {
+                <dt>
+                    Oceny:
+                </dt>
+                <dd>
+                    @for (var i = 5; i >= 0; i--) {
                     if (Model.Ratings.Where(x => x.Rate == i).Count() > 0) {
-                        <img src="@Url.Action("GetImageByRating", "Home", new { id = i })" class="catalog" />
-                        <b>(</b>   @Model.Ratings.Where(x => x.Rate == i).Count()    <b>)</b><br />
+                            <img src="@Url.Action("GetImageByRating", "Home", new { id = i })" class="catalog" />
+                            <b>(</b>   @Model.Ratings.Where(x => x.Rate == i).Count()    <b>)</b><br />
+                        }
                     }
-                }
-            </dd> 
-        }
-    </dl>
+                </dd>
+            }
+        </dl>
+    </div>
+
     <div class="col-md-offset-2">
-        @if (Request.IsAuthenticated && Model.Amount != 0) {
+        @if (Request.IsAuthenticated) {
             <a href="@Url.Action("Borrow", "Catalog", new { id = Model.BookId })">Wypożycz<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
-            using (Html.BeginForm("Rate", "Catalog", new { id = Model.BookId }, FormMethod.Post, new { role = "form" })) {
-                @Html.AntiForgeryToken()
+            using (Ajax.BeginForm(ajaxOpts)) {
                 <div class="stars">
                     @for (var i = 5; i >= 1; i--) {
                         <input type="radio" name="rate" id="star-@i" class="star star-@i" value="@i">

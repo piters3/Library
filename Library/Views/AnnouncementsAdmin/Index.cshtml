@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Library.Entities.Announcement>
+@{
+    ViewBag.Title = "Aktualności";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb{
+    <div>
+        <h1>@ViewBag.Title</h1>
+        <ul class="breadcrumb side">
+            <li><i class="fa fa-home fa-lg"></i></li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <a href="@Url.Action("Create", "AnnouncementsAdmin")"><i class="fa fa-user-plus"></i>Nowe ogłoszenie</a>
+        <table class="table table-hover table-bordered" id="announcementsTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PublicationDate)
+                    </th>
+                    <th>
+                        Akcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @item.Content.Substring(0, item.Content.Length < 150 ? item.Content.Length : 150) [...]
+                        </td>
+                        <td>
+                            @item.PublicationDate
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "AnnouncementsAdmin", new { id = item.AnnouncementId })"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="@Url.Action("Details", "AnnouncementsAdmin", new { id = item.AnnouncementId })"><i class="fa fa-eye"></i></a>
+                            <a href="@Url.Action("Delete", "AnnouncementsAdmin", new { id = item.AnnouncementId })"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/admin/dataTables")
+    <script type="text/javascript">$('#announcementsTable').DataTable();</script>
+}
+

@@ -171,9 +171,11 @@
     <Content Include="Content\Img\3.png" />
     <Content Include="Content\Img\4.png" />
     <Content Include="Content\Img\5.png" />
+    <Content Include="Content\Img\bg1.png" />
     <Content Include="Content\Img\default.jpg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Img\defaultCover.jpg" />
+    <Content Include="Content\Img\logo.png" />
     <Content Include="Content\Img\off.png" />
     <Content Include="Content\Img\on.png" />
     <Content Include="Content\PagedList.css" />
@@ -199,6 +201,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\Manage\EditAccount.cshtml" />
     <Content Include="Views\PanelAdmin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
@@ -249,6 +253,12 @@
     <Content Include="Views\Catalog\AddOpinion.cshtml" />
     <Content Include="Views\OpinionsAdmin\Index.cshtml" />
     <Content Include="Views\OpinionsAdmin\Create.cshtml" />
+    <Content Include="Views\AnnouncementsAdmin\Index.cshtml" />
+    <Content Include="Views\Announcements\Index.cshtml" />
+    <Content Include="Views\Announcements\Details.cshtml" />
+    <Content Include="Views\AnnouncementsAdmin\Create.cshtml" />
+    <Content Include="Views\AnnouncementsAdmin\Edit.cshtml" />
+    <Content Include="Views\Catalog\RateView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -314,6 +324,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnnouncementsAdminController.cs" />
+    <Compile Include="Controllers\AnnouncementsController.cs" />
     <Compile Include="Controllers\BooksAdminController.cs" />
     <Compile Include="Controllers\CategoriesAdminController.cs" />
     <Compile Include="Controllers\ContactAdminController.cs" />
@@ -328,6 +340,7 @@
     <Compile Include="Controllers\RatingsAdminController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Entities\Announcement.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Lending.cs" />

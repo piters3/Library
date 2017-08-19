@@ -1,0 +1,39 @@
+﻿@model Library.Entities.Book
+
+@if (TempData["message"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Świetnie!</strong> @TempData["message"]
+    </div>
+
+}
+@if (TempData["error"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Niestety!</strong> @TempData["error"]
+    </div>
+}
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.AverageRatig)
+    </dt>
+    <dd>
+        <img src="@Url.Action("GetImageByRating", "Home", new { id =  @Math.Round(Model.AverageRatig)})" class="catalog" />
+        @Html.DisplayFor(model => model.AverageRatig) / 5
+        (@Model.Ratings.Count() głosów) <br />
+    </dd>
+    @if (Model.AverageRatig != 0) {
+        <dt>
+            Oceny:
+        </dt>
+        <dd>
+            @for (var i = 5; i >= 0; i--) {
+                    if (Model.Ratings.Where(x => x.Rate == i).Count() > 0) {
+                    <img src="@Url.Action("GetImageByRating", "Home", new { id = i })" class="catalog" />
+                    <b>(</b>   @Model.Ratings.Where(x => x.Rate == i).Count()    <b>)</b><br />
+                }
+            }
+        </dd>
+    }
+</dl>

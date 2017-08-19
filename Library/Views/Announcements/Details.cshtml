@@ -1,0 +1,12 @@
+﻿@model Library.Entities.Announcement
+@{
+    ViewBag.Title = "Szczegóły ogłoszenia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-10 col-md-offset-1">
+    <h2>@Model.Title</h2>
+    <p>@Model.PublicationDate</p>
+    <p>@Model.Content</p>
+</div>

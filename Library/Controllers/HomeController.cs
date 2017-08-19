@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Library.Models;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using System.Linq;
 
 namespace Library.Controllers {
     public class HomeController : Controller {
@@ -73,6 +74,5 @@ namespace Library.Controllers {
         public ActionResult Chat() {
             return View();
         }
-
     }
 }

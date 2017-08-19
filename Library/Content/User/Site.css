@@ -204,6 +204,10 @@ label.star:before {
     background: #fafafa;
     display: block;
     box-sizing: border-box;
+    min-height: 100%;
+    height: auto;
+    /*margin-bottom: -71px;*/
+    margin-bottom: 10px;
 }
 
 footer {
@@ -212,6 +216,7 @@ footer {
     padding: 30px 0 10px;
     box-sizing: border-box;
     display: block;
+
 }
 
 /* scroll to top */
@@ -245,3 +250,4 @@ a.scrollup {
         a.scrollup i:hover {
             text-decoration: none;
         }
+

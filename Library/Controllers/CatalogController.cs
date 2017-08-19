@@ -111,31 +111,31 @@ namespace Library.Controllers {
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult Rate(int id, int rate) {
             Book book = db.Books.Find(id);
             var userId = User.Identity.GetUserId();
 
             if (book.Ratings.Any(x => x.UserId == userId)) {
                 TempData["error"] = string.Format("Już głosowałeś na tą książkę!!!");
-                return RedirectToAction("BookDetails", new { id = id });
+                return PartialView("RateView", book);
+            } else {
+                Rating rating = new Rating {
+                    UserId = userId,
+                    BookId = id,
+                    Rate = rate
+                };
+
+                db.Ratings.Add(rating);
+
+                book.AverageRatig = book.Ratings.Average(x => x.Rate);
+                db.Entry(book).State = EntityState.Modified;
+
+                db.SaveChanges();
+                TempData["message"] = string.Format("Ocena została dodana!");
+                return PartialView("RateView", book);
             }
-
-            Rating rating = new Rating {
-                UserId = userId,
-                BookId = id,
-                Rate = rate
-            };
-
-            db.Ratings.Add(rating);
-
-            book.AverageRatig = book.Ratings.Average(x => x.Rate);
-            db.Entry(book).State = EntityState.Modified;
-
-            db.SaveChanges();
-            TempData["message"] = string.Format("Ocena została dodana!");
-            return RedirectToAction("BookDetails", new { id = id });
         }
 
 

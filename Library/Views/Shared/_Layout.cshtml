@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="@Html.IsActive("Index", "Announcements")">@Html.ActionLink("Aktualności", "Index", "Announcements")</li>
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
+                    @if (Request.IsAuthenticated && User.IsInRole("admin")) {
                         <li class="@Html.IsActive("Index", "PanelAdmin")">@Html.ActionLink("Panel administratora", "Index", "PanelAdmin")</li>
                     }
                     @if (Request.IsAuthenticated) {

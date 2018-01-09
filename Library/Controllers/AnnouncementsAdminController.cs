@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Library.Controllers {
+    [Authorize(Roles = "admin")]
     public class AnnouncementsAdminController : Controller {
 
         private ApplicationDbContext db = new ApplicationDbContext();

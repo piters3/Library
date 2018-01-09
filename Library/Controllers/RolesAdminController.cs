@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 
 namespace Library.Controllers {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class RolesAdminController : Controller {
         public RolesAdminController() {
         }

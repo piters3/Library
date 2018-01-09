@@ -3,6 +3,7 @@ namespace Library.Migrations
     using Library.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -17,10 +18,51 @@ namespace Library.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
-            UsersAndRoles(context);
+            //AddUsersAndRolesFailured(context);
+            AddUsersAndRoles(context);
         }
 
-        private static void UsersAndRoles(ApplicationDbContext context)
+        private static void AddUsersAndRoles(ApplicationDbContext context)
+        {
+            var adminRole = new IdentityRole { Name = "admin", Id = Guid.NewGuid().ToString() };
+            var userRole = new IdentityRole { Name = "user", Id = Guid.NewGuid().ToString() };
+            context.Roles.Add(adminRole);
+            context.Roles.Add(userRole);
+
+            var hasher = new PasswordHasher();
+
+            var admin = new ApplicationUser
+            {
+                UserName = "admin",
+                Email = "admin@admin.com",
+                PasswordHash = hasher.HashPassword("admin"),
+                EmailConfirmed = true,
+                Enabled = true,
+                RegisterDate = DateTime.Now,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            admin.Roles.Add(new IdentityUserRole { RoleId = adminRole.Id, UserId = admin.Id });
+
+            context.Users.Add(admin);
+
+            var user = new ApplicationUser
+            {
+                UserName = "user",
+                Email = "user@user.com",
+                PasswordHash = hasher.HashPassword("user"),
+                EmailConfirmed = true,
+                Enabled = true,
+                RegisterDate = DateTime.Now,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            user.Roles.Add(new IdentityUserRole { RoleId = userRole.Id, UserId = user.Id });
+
+            context.Users.Add(user);
+        }
+
+        private static void AddUsersAndRolesFailured(ApplicationDbContext context)
         {
             if (!context.Roles.Any())
             {

@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Library.Controllers {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class PanelAdminController : Controller {
         public PanelAdminController() {
         }
